@@ -14,12 +14,12 @@ import "@mdi/font/css/materialdesignicons.css";
 const myCustomLightTheme = {
   dark: false,
   colors: {
-    primary: "#80162B",
-    secondary: "#E1E1E1",
-    accent: "#47121D",
-    success: "#47121D",
-    error: "#EE5044",
-    teal: "#63BAC0",
+    primary: "#811429",
+    sidebar: "#004761",
+    button_blue: "#118ACB",
+    silver: "#D5DFE7",
+    red_links: "#811429",
+    yellow_cards: "#F9C634",
     blue: "#196CA2",
     yellow: "#F8C545",
     darkblue: "#032F45",
@@ -36,6 +36,9 @@ const vuetify = createVuetify({
   icons: {
     defaultSet: "mdi",
   },
+  typography:{
+    fontFamily: '"Sofia Sans", sans-serif'
+  }
 });
 
 export default vuetify;
