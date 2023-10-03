@@ -3,7 +3,8 @@ import { ref, onMounted } from "vue";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
 /***************
- * TODO: Add navigation to each link on this page
+ * TODO: Add navigation functions
+ *       Add Onclicks to each button
  **************/
 
 
@@ -31,14 +32,26 @@ import AuthServices from "../services/authServices";
                     </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel
-                    title="Accommodations"
-                    text="View Accommodations"    
+                    title="Accommodations"   
                 >
+                    <v-expansion-panel-text>
+                        <v-row>
+                            <v-btn variant="text">
+                                View Accommodations
+                            </v-btn>
+                        </v-row>
+                    </v-expansion-panel-text>
                 </v-expansion-panel>
                 <v-expansion-panel
-                    title="FAQ"
-                    text="FAQs"    
+                    title="FAQ" 
                 >
+                    <v-expansion-panel-text>
+                        <v-row>
+                            <v-btn variant="text">
+                                View FAQs
+                            </v-btn>
+                        </v-row>
+                    </v-expansion-panel-text>
                 </v-expansion-panel>
             </v-expansion-panels>
         </v-navigation-drawer>
