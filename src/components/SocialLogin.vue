@@ -23,7 +23,7 @@ const loginWithGoogle = () => {
     type: "standard",
     theme: "outline",
     size: "large",
-    text: "signup_with",
+    text: "Sign in with Google",
     width: 400,
   });
 };
