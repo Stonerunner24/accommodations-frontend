@@ -7,8 +7,8 @@ import SideBar from "./components/SideBar.vue";
 
 <template>
   <v-app>
-    <MenuBar :key="$route.fullPath" />
-    <SideBar :key="$route.fullPath" />
+    <!-- <MenuBar :key="$route.fullPath" />
+    <SideBar :key="$route.fullPath" /> -->
     <v-main>
       <router-view />
     </v-main>
