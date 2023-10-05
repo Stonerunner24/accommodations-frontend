@@ -1,5 +1,5 @@
 import apiClient from "./services";
-var baseURL = "/requests/"
+var baseURL = "/requests/";
 
 export default{
     getAll(){
