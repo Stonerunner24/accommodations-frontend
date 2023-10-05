@@ -1,11 +1,11 @@
 <script setup>
-import ocLogo from "/oc-logo-white.png";
+import ocLogo from "/oc-logo-red.svg";
 import { ref, onMounted } from "vue";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
 
 const user = ref(null);
-const title = ref("Tutorials");
+const title = ref("Student Accommodations");
 const initials = ref("");
 const name = ref("");
 const logoURL = ref("");
@@ -39,13 +39,13 @@ onMounted(() => {
 
 <template>
   <div>
-    <v-app-bar app>
+    <v-app-bar app color="primary" height="80">
       <router-link :to="{ name: 'tutorials' }">
         <v-img
           class="mx-2"
           :src="logoURL"
-          height="50"
-          width="50"
+          height="80"
+          width="80"
           contain
         ></v-img>
       </router-link>
@@ -53,10 +53,6 @@ onMounted(() => {
         {{ title }}
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <div v-if="user">
-        <v-btn class="mx-2" :to="{ name: 'tutorials' }"> List </v-btn>
-        <v-btn class="mx-2" :to="{ name: 'add' }"> Add Tutorial </v-btn>
-      </div>
       <v-menu bottom min-width="200px" rounded offset-y v-if="user">
         <template v-slot:activator="{ props }">
           <v-btn v-bind="props" icon x-large>
