@@ -1,0 +1,68 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import AuthServices from "../services/authServices";
+import Utils from "../config/utils.js";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const fName = ref("");
+const lName = ref("");
+const role = ref("");
+const user = ref({});
+
+const loginWithGoogle = () => {
+  window.handleCredentialResponse = handleCredentialResponse;
+  const client = import.meta.env.VITE_APP_CLIENT_ID;
+  console.log(client);
+  window.google.accounts.id.initialize({
+    client_id: client,
+    cancel_on_tap_outside: false,
+    auto_select: true,
+    callback: window.handleCredentialResponse,
+  });
+  window.google.accounts.id.renderButton(document.getElementById("parent_id"), {
+    type: "standard",
+    theme: "outline",
+    size: "large",
+    text: "Sign in with Google",
+    width: 400,
+  });
+};
+
+const handleCredentialResponse = async (response) => {
+  let token = {
+    credential: response.credential,
+  };
+  await AuthServices.loginUser(token)
+    .then((response) => {
+      user.value = response.data;
+      console.log("Response data");
+      console.log(response.data);
+      Utils.setStore("user", user.value);
+      fName.value = user.value.fName;
+      lName.value = user.value.lName;
+      role.value = user.value.role;
+      console.log("User: " + role);
+      console.log("Role values: " + role.value);
+      if (role.value == "student")
+        router.push({ name: "studentHome" });
+      else if (role.value == "admin")
+        router.push({ name: "adminHome" });
+    })
+    .catch((error) => {
+      console.log("error", error);
+    });
+};
+
+onMounted(() => {
+  loginWithGoogle();
+});
+</script>
+
+<template>
+  <div class="signup-buttons">
+    <v-row justify="center">
+      <div display="flex" id="parent_id"></div>
+    </v-row>
+  </div>
+</template>
