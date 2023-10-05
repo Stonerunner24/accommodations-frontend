@@ -16,9 +16,9 @@ import ocLogo from "/oc-logo-docked.svg";
   <v-container>
     <br /><br />
     <v-header class="text-h1">Welcome!</v-header><br />
-    <v-subheader class="text-h4">Student ADA Accommodations Requests Portal</v-subheader>
+    <v-subheader class="text-h4">Student ADA Accommodations Portal</v-subheader>
     <br><br><br><br><br>
-    <v-sheet class="mx-auto" color=#f9c634 height="60" width="420">
+    <v-sheet class="mx-auto" color="yellow_cards" height="60" width="420">
       <v-row align="center" justify="center" style="height: 100%;">
         <v-col cols="12" sm="8" md="6">
           <SocialLogin />
