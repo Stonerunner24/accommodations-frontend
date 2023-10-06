@@ -1,13 +1,16 @@
 <script setup>
-    import MenuBar from "./components/MenuBar.vue";
 
 </script>
 
 <template>
-    <v-app>
-        <MenuBar :key="$route.fullPath" />
-    </v-app>
-
-    <v-btn rounded="lg" elevation="4">MAKE A REQUEST</v-btn>
+    <div class="pa-5">
+        <div class="pa-7">
+            <v-text  class="text-h6 text-left">My Requests</v-text>
+            <v-btn class="mr-15" rounded="lg" elevation="2" style="background-color:#118ACB; color:white; float:right">MAKE A REQUEST</v-btn>
+        </div>
+        <v-card class="pa-7 mr-15" style="background-color: #D5DFE7;">
+            <v-text>No open requests</v-text>
+        </v-card>
+    </div>
 
 </template>
