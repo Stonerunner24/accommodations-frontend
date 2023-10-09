@@ -31,6 +31,11 @@ const router = createRouter({
       name: "adminHome",
       component: AdminHome,
     },
+    {
+      path: "/makeRequest",
+      name: "makeRequest",
+      component: RequestForm,
+    },
     /*{
       path: "/edit/:id",
       name: "edit",
