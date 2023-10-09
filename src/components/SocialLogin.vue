@@ -7,6 +7,7 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const fName = ref("");
 const lName = ref("");
+const role = ref("");
 const user = ref({});
 
 const loginWithGoogle = () => {
@@ -23,7 +24,7 @@ const loginWithGoogle = () => {
     type: "standard",
     theme: "outline",
     size: "large",
-    text: "signup_with",
+    text: "Sign in with Google",
     width: 400,
   });
 };
@@ -35,10 +36,18 @@ const handleCredentialResponse = async (response) => {
   await AuthServices.loginUser(token)
     .then((response) => {
       user.value = response.data;
+      console.log("Response data");
+      console.log(response.data);
       Utils.setStore("user", user.value);
       fName.value = user.value.fName;
       lName.value = user.value.lName;
-      router.push({ name: "" });
+      role.value = user.value.role;
+      console.log("User: " + role);
+      console.log("Role values: " + role.value);
+      if (role.value == "student")
+        router.push({ name: "studentHome" });
+      else if (role.value == "admin")
+        router.push({ name: "adminHome" });
     })
     .catch((error) => {
       console.log("error", error);
