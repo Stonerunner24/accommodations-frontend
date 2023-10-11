@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Login from "./views/Login.vue";
+import RequestForm from "./views/RequestForm.vue";
 
 /*import TutorialsList from "./views/TutorialsList.vue";
 import EditTutorial from "./views/EditTutorial.vue";
@@ -29,6 +30,11 @@ const router = createRouter({
       path: "/adminHome",
       name: "adminHome",
       component: AdminHome,
+    },
+    {
+      path: "/makeRequest",
+      name: "makeRequest",
+      component: RequestForm,
     },
     /*{
       path: "/edit/:id",
