@@ -28,5 +28,4 @@
             -->
         </v-card>
     </div>
-
 </template>
