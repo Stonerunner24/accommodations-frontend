@@ -8,6 +8,7 @@ import EditTutorial from "./views/EditTutorial.vue";
 import AddTutorial from "./views/AddTutorial.vue";
 import ViewTutorial from "./views/ViewTutorial.vue";
 import AddLesson from "./views/AddLesson.vue";
+import EditLesson from "./views/EditLesson.vue";
 import EditLesson from "./views/EditLesson.vue"; */
 import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
@@ -65,6 +66,12 @@ const router = createRouter({
       component: EditLesson,
       props: true,
     },*/
+    {
+      path: "/StudentHome/:studentId",
+      name: "StudentHome",
+      component: StudentHome,
+      props: true,
+    },
   ],
 });
 
