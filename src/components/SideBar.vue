@@ -1,4 +1,4 @@
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
