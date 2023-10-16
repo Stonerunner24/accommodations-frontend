@@ -11,6 +11,7 @@ import EditLesson from "./views/EditLesson.vue";
 import EditLesson from "./views/EditLesson.vue"; */
 import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
+import AdminAdd from "./views/AdminAdd.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
       path: "/adminHome",
       name: "adminHome",
       component: AdminHome,
+    },
+    {
+      path: "/adminAdd",
+      name: "adminAdd",
+      component: AdminAdd,
     },
     /*{
       path: "/edit/:id",
