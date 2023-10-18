@@ -7,10 +7,17 @@
     import MenuBar from "../components/MenuBar.vue";
     import SideBar from "../components/SideBar.vue";
     import router from "../router";
+    import { ref } from "vue";
+    import RequestServices from "../services/requestServices" 
 
-    const makeRequest = () => {
-        router.push({name: 'makeRequest'})
+    const requestForm = ref(false);
+    const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
+
+    const createRequest = () => {
+        
     }
+
+
 </script>
 
 <template>
@@ -19,19 +26,41 @@
     
     <div class="pa-5">
         <div class="pa-7">
-            <v-text  class="text-h6 text-left">My Requests</v-text>
-            <v-btn @click="makeRequest()" class="mr-15" rounded="lg" elevation="2" style="background-color:#118ACB; color:white; float:right">MAKE A REQUEST</v-btn>
+            <p  class="text-h6 text-left">
+                My Requests
+                <v-btn 
+                    @click.stop="requestForm = true" 
+                    class="mr-15" 
+                    rounded="lg" 
+                    elevation="2" 
+                    style="background-color:#118ACB; 
+                        color:white; 
+                        float:right"
+                    >
+                    MAKE A REQUEST
+                </v-btn>
+            </p>
+            
         </div>
         <v-card class="pa-7 mr-15" style="background-color: #D5DFE7;">
             <!--add a conditional v-if for when open request = 0 to say no open requests-->
             <!--
             <v-text v-if="openRequest == 0">No open requests.</v-text>
             -->
-            <v-text>No open requests.</v-text>
+            <p>No open requests.</p>
             <!--add a conditional v-else for when open requests > 0 to give a number n of how many requests are open-->
             <!--
             <v-text v-else>{{ openRequest.count }} open requests.</v-text>
             -->
         </v-card>
+        <v-dialog
+            v-model="requestForm"
+            activator="parent"
+            width="auto"
+            >
+            <RequestForm 
+                :semesters="Semesters"
+            />
+        </v-dialog>
     </div>
 </template>
