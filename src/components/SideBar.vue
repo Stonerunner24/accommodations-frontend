@@ -1,12 +1,15 @@
-<script>
+<script setup>
 import { ref, onMounted } from "vue";
 import Utils from "../config/utils";
 import AuthServices from "../services/authServices";
+import router from "../router";
 /***************
  * TODO: Add navigation functions
  *       Add Onclicks to each button
  **************/
-
+const addRequest = () => {
+    router.push({name: 'makeRequest'});
+}
 
 
 </script>
@@ -20,7 +23,7 @@ import AuthServices from "../services/authServices";
                 >
                     <v-expansion-panel-text>
                         <v-row>
-                            <v-btn variant="text">
+                            <v-btn variant="text" @click="addRequest()">
                                 Make a Request
                             </v-btn>
                         </v-row>
