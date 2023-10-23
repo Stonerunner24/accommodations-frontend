@@ -1,4 +1,10 @@
+<script setup>
+    import MenuBar from "../components/MenuBar.vue"
+    import accommServices from "../services/accommServices"
+</script>
+
 <template>
+    <!-- <MenuBar/> -->
     <div class="ma-6">
         <div>
             <v-text class="text-h5" style="font-weight: bold;">Add Accommodations</v-text>
@@ -8,6 +14,8 @@
         <v-text>{{ studentName }} John Doe</v-text>
         <v-text>{{ semseter }} Fall 2023</v-text>
     </div>
+
+    <v-btn @click="testApi">test api</v-btn>
 
     <div class="ml-10 mr-16">
         <div class="pb-5">
@@ -50,7 +58,7 @@
 </template>
 
 <script>
-    // import MenuBar from "../components/MenuBar.vue"
-
-
+    function testApi() {
+        console.log(accommServices.getAllAccommodations())
+    }
 </script>
