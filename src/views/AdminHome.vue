@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import RequestServices from '../services/requestServices.js';
+import moment from 'moment';
 
 // Holds all open requests with their associated Student
 const openRequests = ref([]);
@@ -15,6 +16,10 @@ onMounted(async () => {
     console.error(error);
   }
 });
+
+const formatDate = (date) => {
+  return moment(String(date)).format('MM/DD/YYYY');
+}
 </script>
 
 <template>
@@ -41,9 +46,9 @@ onMounted(async () => {
               <td>{{ `${request.student.fName} ${request.student.lName}` }}</td>
               <td>{{ request.studentId }}</td>
               <td>{{ request.student.email }}</td>
-              <td>{{ request.dateMade }}</td>
+              <td>{{ formatDate(request.dateMade) }}</td>
               <td>
-                <v-button>Add Accommodations</v-button>
+                <v-btn>Add</v-btn><v-btn flat>Close</v-btn>
               </td>
             </tr>
           </tbody>
