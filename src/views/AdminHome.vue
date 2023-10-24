@@ -5,6 +5,8 @@ import moment from 'moment';
 
 // Holds all open requests with their associated Student
 const openRequests = ref([]);
+const closedRequests = ref([]);
+
 
 onMounted(async () => {
   try {
@@ -12,6 +14,10 @@ onMounted(async () => {
     const response = await RequestServices.getAllForStatus('Open');
     // Save in openRequests variable
     openRequests.value = response.data;
+    // Get data from API call
+    const response2 = await RequestServices.getAllForStatus('Closed');
+    // Save in openRequests variable
+    closedRequests.value = response2.data;
   } catch (error) {
     console.error(error);
   }
@@ -50,6 +56,33 @@ const formatDate = (date) => {
               <td>
                 <v-btn>Add</v-btn><v-btn flat>Close</v-btn>
               </td>
+            </tr>
+          </tbody>
+        </v-table>
+        <v-divider></v-divider>
+        <h1>Closed Requests</h1>
+        <v-table
+          fixed-header
+          height = "20%"
+          >
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Student ID</th>
+              <th>Email</th> 
+              <th>Date Opened</th>
+              <th>Approved By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="request in closedRequests"
+              :key="request.studentId">
+              <td>{{ `${request.student.fName} ${request.student.lName}` }}</td>
+              <td>{{ request.studentId }}</td>
+              <td>{{ request.student.email }}</td>
+              <td>{{ formatDate(request.dateMade) }}</td>
+              <td>{{ request.approvedBy }}</td>
             </tr>
           </tbody>
         </v-table>
