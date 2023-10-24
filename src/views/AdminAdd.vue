@@ -1,6 +1,6 @@
 <script setup>
-    import MenuBar from "../components/MenuBar.vue"
-    import accommServices from "../services/accommServices"
+    //import MenuBar from "../components/MenuBar.vue"
+    import accommServices from "../services/accommodationServices.js"
 </script>
 
 <template>
@@ -59,6 +59,6 @@
 
 <script>
     function testApi() {
-        console.log(accommServices.getAllAccommodations())
+        console.log(accommServices.getAll())
     }
 </script>
