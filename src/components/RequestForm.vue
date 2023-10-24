@@ -1,12 +1,16 @@
-<script>
-    export default{
-       props: {
-        semesters: Object
-       }, 
-       emits: ['createRequest', 'cancel']
-    }
-
-
+<script setup>
+    // export default{
+    //    props: {
+    //     semesters: Object
+    //    }, 
+    //    emits: ['createRequest', 'cancel']
+    // }
+    import {ref, defineProps, } from 'vue';
+    const selectedSem = ref(null);
+    const props = defineProps({
+        semesters: Array,
+    });
+    
     //TODO: refactor Semesters to use data from backend
 </script>
 
@@ -15,13 +19,14 @@
         <v-card elevation="5" rounded="lg" width="20rem" style="padding-bottom: 16px; padding-left: 16px">
             <v-card-title>Create New Request</v-card-title>
             <v-combobox
+                v-model="selectedSem"
                 label="Semester"
                 :items="semesters"
                 variant="underlined"
                 style="float:left; width:60%; padding-left: 16px"
             ></v-combobox>
             <v-btn
-                @click="$emit('createRequest')" 
+                @click="$emit('createRequest', selectedSem)" 
                 rounded="lg" 
                 elevation="2" 
                 style="background-color:#118ACB; 
@@ -33,7 +38,7 @@
             </v-btn>
             <v-btn
                 flat
-                @click="$emit(cancel)" 
+                @click="$emit('cancel')" 
                 rounded="lg" 
                 elevation="2" 
                 style="background-color: silver;
