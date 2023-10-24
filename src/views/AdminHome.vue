@@ -6,7 +6,8 @@ import moment from 'moment';
 // Holds all open requests with their associated Student
 const openRequests = ref([]);
 const closedRequests = ref([]);
-
+const cancelModal = ref(false);
+const selectedRequest = ref(null);
 
 onMounted(async () => {
   try {
@@ -26,11 +27,21 @@ onMounted(async () => {
 const formatDate = (date) => {
   return moment(String(date)).format('MM/DD/YYYY');
 }
+
+const addAccom = (request) => {
+  // Add code here to change the route. 
+  // Pass in the request object so you can get the student info??
+  // Can change the parameters of this if necessary
+}
+
+const closeRequest = () => {
+
+}
 </script>
 
 <template>
     
-    <v-container>
+    <v-container @click.stop>
         <h1>Open Requests</h1>
         <v-table
           fixed-header
@@ -57,11 +68,12 @@ const formatDate = (date) => {
                 <!--TODO: Add function call stubs to both these-->
                 <!--Add will router-link to AddAccom page--make sure I know what this page is called-->
                 <v-btn
-
+                  @click = "addAccom(request)"
                   >Add</v-btn>
                   <!--Close should open a dialog box asking if the user is sure which allows closing of the request without adding accommodations-->
                 <v-btn 
                   flat
+                  @click = "(closeModal = true), (selectedRequest = request)"
                   >Close</v-btn>
               </td>
             </tr>
