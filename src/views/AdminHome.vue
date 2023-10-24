@@ -54,7 +54,15 @@ const formatDate = (date) => {
               <td>{{ request.student.email }}</td>
               <td>{{ formatDate(request.dateMade) }}</td>
               <td>
-                <v-btn>Add</v-btn><v-btn flat>Close</v-btn>
+                <!--TODO: Add function call stubs to both these-->
+                <!--Add will router-link to AddAccom page--make sure I know what this page is called-->
+                <v-btn
+
+                  >Add</v-btn>
+                  <!--Close should open a dialog box asking if the user is sure which allows closing of the request without adding accommodations-->
+                <v-btn 
+                  flat
+                  >Close</v-btn>
               </td>
             </tr>
           </tbody>
