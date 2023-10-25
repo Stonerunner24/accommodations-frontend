@@ -13,6 +13,7 @@
 
     const user = ref(null);
     const requestForm = ref(false);
+    // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
 
     const handleCreate = (selectedSem) => {
