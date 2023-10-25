@@ -1,6 +1,10 @@
 <script setup>
     //import MenuBar from "../components/MenuBar.vue"
     import accommServices from "../services/accommodationServices.js"
+
+    const accommodations = accommServices.getAll();
+
+    console.log(accommodations.categoryName);
 </script>
 
 <template>
@@ -15,8 +19,6 @@
         <v-text>{{ semseter }} Fall 2023</v-text>
     </div>
 
-    <v-btn @click="testApi">test api</v-btn>
-
     <div class="ml-10 mr-16">
         <div class="pb-5">
             <v-text class="text-h6">Academic</v-text>
@@ -30,14 +32,12 @@
         <div class="pb-5">
             <v-text class="text-h6">Chapel</v-text>
             <div>
-                <!--
-                    v-for through student accommodations that are of the chapel specification
-                    <v-card v-for="[accommodations, accommodations] in accommodations"></v-card>
-                -->
+                <!-- v-for through student accommodations that are of the chapel specification -->
+                <v-card v-for="a in accommodations">{{ a.categoryName }}</v-card>
                 <!--temporary v-card-->
-                <v-card  class="rounded-0" style="background-color:#D5DFE7">
+                <!-- <v-card  class="rounded-0" style="background-color:#D5DFE7">
                     <v-checkbox label="Accommodation Name" color="primary" style="font-weight: bold; color:black"></v-checkbox>
-                </v-card>
+                </v-card> -->
             </div>
         </div>        
 
@@ -56,9 +56,3 @@
         <v-btn class="mr-4" color="#F9C634" style="float:right">save</v-btn>
     </div>
 </template>
-
-<script>
-    function testApi() {
-        console.log(accommServices.getAll())
-    }
-</script>
