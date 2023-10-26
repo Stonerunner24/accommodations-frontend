@@ -1,10 +1,23 @@
 <script setup>
     //import MenuBar from "../components/MenuBar.vue"
     import accommServices from "../services/accommodationServices.js"
+    import {ref, onMounted} from "vue";
 
-    const accommodations = accommServices.getAll();
+    const accommodations = ref([])
 
-    console.log(accommodations.categoryName);
+    async function getAccomm() {
+        await accommServices.getAll()
+            .then((response) => {
+                accommodations.value = response.data;
+                console.log(accommodations.value);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+    onMounted(async() =>{
+        await getAccomm();
+    })
 </script>
 
 <template>
@@ -33,10 +46,12 @@
             <v-text class="text-h6">Chapel</v-text>
             <div>
                 <!-- v-for through student accommodations that are of the chapel specification -->
-                <v-card v-for="a in accommodations">{{ a.categoryName }}</v-card>
+                <v-card>
+                    <v-checkbox v-for="a in accommodations" color="primary" style="font-weight: bold; color:black">{{ a.categoryName }}</v-checkbox>
+                </v-card>
                 <!--temporary v-card-->
                 <!-- <v-card  class="rounded-0" style="background-color:#D5DFE7">
-                    <v-checkbox label="Accommodation Name" color="primary" style="font-weight: bold; color:black"></v-checkbox>
+                    v-for="a in accommodations">{{ a.categoryName }}
                 </v-card> -->
             </div>
         </div>        
