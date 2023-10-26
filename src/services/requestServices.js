@@ -18,7 +18,7 @@ export default{
         return apiClient.put(baseURL + `${requestId}`, data);
     },
     delete(requestId){
-        console.log('deleting');
+        console.log('deleting ' + requestId);
         return apiClient.delete(baseURL+`${requestId}`);
     },
     deleteAll(){
