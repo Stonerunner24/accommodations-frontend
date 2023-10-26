@@ -39,6 +39,11 @@ const router = createRouter({
           name: 'studentHome', 
           component: StudentHome 
         },
+        {
+          path: "makeRequest",
+          name: "makeRequest",
+          component: RequestForm
+        },
       ],
     },
     {
