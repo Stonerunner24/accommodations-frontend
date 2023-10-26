@@ -1,5 +1,4 @@
 <script setup>
-    //import MenuBar from "../components/MenuBar.vue"
     import accommServices from "../services/accommodationServices.js"
     import {ref, onMounted} from "vue";
 
@@ -10,6 +9,9 @@
             .then((response) => {
                 accommodations.value = response.data;
                 console.log(accommodations.value);
+                accommodations.value.forEach((accomm) => {
+                    accomm.chapelChkBox = false;
+                })
             })
             .catch((err) => {
                 console.log(err);
@@ -18,10 +20,10 @@
     onMounted(async() =>{
         await getAccomm();
     })
+    
 </script>
 
 <template>
-    <!-- <MenuBar/> -->
     <div class="ma-6">
         <div>
             <v-text class="text-h5" style="font-weight: bold;">Add Accommodations</v-text>
@@ -37,7 +39,15 @@
             <v-text class="text-h6">Academic</v-text>
             <div>
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
-                    <v-checkbox label="Accommodation Name" color="primary" style="font-weight: bold; color:black"></v-checkbox>
+                    <div v-for="a in accommodations">
+                        <v-checkbox 
+                            v-if="a.categoryName == 'Academic'"
+                            v-model="a.chapelChkBox"
+                            :label="a.title" 
+                            color="primary" 
+                            style="font-weight: bold; color:black">
+                    </v-checkbox>
+                    </div>                
                 </v-card>
             </div>
         </div>
@@ -46,13 +56,17 @@
             <v-text class="text-h6">Chapel</v-text>
             <div>
                 <!-- v-for through student accommodations that are of the chapel specification -->
-                <v-card>
-                    <v-checkbox v-for="a in accommodations" color="primary" style="font-weight: bold; color:black">{{ a.categoryName }}</v-checkbox>
+                <v-card class="rounded-0" style="background-color:#D5DFE7">
+                    <div v-for="a in accommodations">
+                        <v-checkbox 
+                            v-if="a.categoryName == 'Chapel'"
+                            v-model="a.chapelChkBox"
+                            :label="a.title" 
+                            color="primary" 
+                            style="font-weight: bold; color:black">
+                    </v-checkbox>
+                    </div>
                 </v-card>
-                <!--temporary v-card-->
-                <!-- <v-card  class="rounded-0" style="background-color:#D5DFE7">
-                    v-for="a in accommodations">{{ a.categoryName }}
-                </v-card> -->
             </div>
         </div>        
 
@@ -60,7 +74,15 @@
             <v-text class="text-h6">Housing</v-text>
             <div>
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
-                    <v-checkbox label="Accommodation Name" color="primary" style="font-weight: bold; color:black"></v-checkbox>
+                    <div v-for="a in accommodations">
+                        <v-checkbox 
+                            v-if="a.categoryName == 'Housing'"
+                            v-model="a.chapelChkBox"
+                            :label="a.title" 
+                            color="primary" 
+                            style="font-weight: bold; color:black">
+                    </v-checkbox>
+                    </div>
                 </v-card>
             </div>
         </div>

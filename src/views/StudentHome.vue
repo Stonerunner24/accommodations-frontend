@@ -8,15 +8,41 @@
     import SideBar from "../components/SideBar.vue";
     import router from "../router";
     import { ref } from "vue";
-    import RequestServices from "../services/requestServices" 
+    import RequestServices from "../services/requestServices"
+    import Utils from "../config/utils";
 
+    const user = ref(null);
     const requestForm = ref(false);
+    // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
 
-    const createRequest = () => {
-        
-    }
+    const handleCreate = (selectedSem) => {
+        console.log(selectedSem);
+        let season = selectedSem.charAt[0] = 'F' ? 'Fall' : 'Spring';
+        let year = selectedSem.substring(2,6);
+        console.log(season + ' ' + year);
+        createRequest(season, year);
+        requestForm.value = false;
+    };
 
+    const createRequest = (season, year) => {
+        user.value = null;
+        user.value = Utils.getStore("user");
+        const data = {
+            season: season,
+            year: year,
+            email: user.value.email
+        };
+        console.log(data);
+        RequestServices.create(data)
+            .then((response) => {
+                
+                console.log(response.data);
+            }) 
+            .catch((e) => {
+                console.log(e.response.data.message);
+            });
+    };
 
 </script>
 
@@ -60,7 +86,10 @@
             >
             <RequestForm 
                 :semesters="Semesters"
+                @createRequest="handleCreate"
+                @cancel="(requestForm = false)"
             />
         </v-dialog>
     </div>
+    
 </template>
