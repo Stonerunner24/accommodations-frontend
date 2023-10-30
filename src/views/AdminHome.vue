@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import RequestServices from '../services/requestServices.js';
 import moment from 'moment';
 import CloseModal from '../components/CloseModal.vue'
+import router from '../router';
 
 // Holds all open requests with their associated Student
 const openRequests = ref([]);
@@ -46,6 +47,9 @@ const addAccom = (request) => {
   // Add code here to change the route. 
   // Pass in the request object so you can get the student info??
   // Can change the parameters of this if necessary
+
+  router.push({name: 'adminAdd', params: {request: request}});
+
   console.log(request);
 }
 
@@ -72,6 +76,8 @@ const closeRequest = (request) => {
   selectedRequest.value=null;
   closeModal.value=false;
 }
+
+  const props = defineProps(['student', 'semester'])
 
 </script>
 

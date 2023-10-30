@@ -30,7 +30,7 @@
             <v-btn class="ml-4" style="float:right">cancel</v-btn>
             <v-btn class="mr-4" color="#F9C634" style="float:right">save</v-btn>
         </div>
-        <v-text>{{ studentFirstName }} {{ studentLastName }} John Doe</v-text>
+        <v-text> {{ request }} {{ studentLastName }} John Doe</v-text>
         <v-text>{{ semseter }} Fall 2023</v-text>
     </div>
 
@@ -96,10 +96,8 @@
 
 <script>
     export default {
-        props: [
-            'studentFirstName',
-            'studentLastName',
-            'semester'
-        ]
+        props: {
+            request: Object,
+        }
     }
 </script>
