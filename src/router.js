@@ -2,19 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // Import views
 import Login from "./views/Login.vue";
-import RequestForm from "./views/RequestForm.vue";
-
-/*import TutorialsList from "./views/TutorialsList.vue";
-import EditTutorial from "./views/EditTutorial.vue";
-import AddTutorial from "./views/AddTutorial.vue";
-import ViewTutorial from "./views/ViewTutorial.vue";
-import AddLesson from "./views/AddLesson.vue";
-import EditLesson from "./views/EditLesson.vue"; */
 import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
 
 // Import layouts
-import SimpleLayout from "./layouts/SimpleLayout.vue";
 import AdminLayout from "./layouts/AdminLayout.vue";
 import StudentLayout from "./layouts/StudentLayout.vue";
 
@@ -38,11 +29,6 @@ const router = createRouter({
           path: '', 
           name: 'studentHome', 
           component: StudentHome 
-        },
-        {
-          path: "makeRequest",
-          name: "makeRequest",
-          component: RequestForm
         },
       ],
     },

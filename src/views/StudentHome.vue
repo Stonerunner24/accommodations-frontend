@@ -4,8 +4,6 @@
 * - Eli
 */
     import RequestForm from "../components/RequestForm.vue";
-    import MenuBar from "../components/MenuBar.vue";
-    import SideBar from "../components/SideBar.vue";
     import router from "../router";
     import { ref } from "vue";
     import RequestServices from "../services/requestServices"
@@ -46,10 +44,7 @@
 
 </script>
 
-<template>
-    <MenuBar />
-    <SideBar />
-    
+<template>    
     <div class="pa-5">
         <div class="pa-7">
             <p  class="text-h6 text-left">
