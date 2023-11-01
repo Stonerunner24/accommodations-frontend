@@ -46,7 +46,8 @@ const router = createRouter({
           // :id is the id of the request which is being added to 
           path: 'adminAdd/:id',
           name: 'adminAdd',
-          component: AdminAdd
+          component: AdminAdd,
+          // props: {route} => {{ request: route.request.requestId}}
         },
       ],
     },

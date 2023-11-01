@@ -13,7 +13,7 @@ const openReqBool = ref(false);
 const closedReqBool = ref(false);
 const closeModal = ref(false);
 const selectedRequest = ref(null);
-const requestData = ref(null);
+let requestData = ref(null);
 
 onMounted(async () => {
   loadRequests();
@@ -52,7 +52,7 @@ const addAccom = (request) => {
   // Pass in the request object so you can get the student info??
   // Can change the parameters of this if necessary
 
-  router.push({name: 'adminAdd', params: {request: request}});
+  router.push({ name: 'adminAdd', params: { id: request.requestId }});
 
   console.log(request);
 }
@@ -80,10 +80,6 @@ const closeRequest = (request) => {
   selectedRequest.value=null;
   closeModal.value=false;
 }
-
-  const props = defineProps({
-    request: Object
-  });
 
 </script>
 

@@ -1,11 +1,14 @@
 <script setup>
     import accommServices from "../services/accommodationServices.js"
-    import AdminHome from "./AdminHome.vue";
     import {ref, onMounted} from "vue";
+    import { useRoute } from 'vue-router'
+    import { computed } from 'vue';
 
     const accommodations = ref([])
-    const requestProp = props.requestProp;
-    const { props } = defineProps(['requestProp']);
+    const student = ref([]);
+    const route = useRoute();
+    const params = computed(() => route.params)
+    const requestId = route.params.id;
 
     async function getAccomm() {
         await accommServices.getAll()
@@ -26,14 +29,6 @@
     
 </script>
 
-<script>
-    export default {
-        props: {
-            requestProp: Object,
-        }
-    }
-</script>
-
 <template>
     <div class="ma-6">
         <div>
@@ -41,7 +36,7 @@
             <v-btn class="ml-4" style="float:right">cancel</v-btn>
             <v-btn class="mr-4" color="#F9C634" style="float:right">save</v-btn>
         </div>
-        <v-text> {{ requestProp.studentId }} {{ studentLastName }} John Doe</v-text>
+        <v-text> {{ requestId }}</v-text>
         <v-text>{{ semseter }} Fall 2023</v-text>
     </div>
 
