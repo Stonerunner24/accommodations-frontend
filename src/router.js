@@ -43,6 +43,7 @@ const router = createRouter({
           component: AdminHome
         },
         {
+          // :id is the id of the request which is being added to 
           path: 'adminAdd/:id',
           name: 'adminAdd',
           component: AdminAdd
