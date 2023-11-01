@@ -2,18 +2,20 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // Import views
 import Login from "./views/Login.vue";
+<<<<<<< HEAD
 /*import TutorialsList from "./views/TutorialsList.vue";
 import EditTutorial from "./views/EditTutorial.vue";
 import AddTutorial from "./views/AddTutorial.vue";
 import ViewTutorial from "./views/ViewTutorial.vue";
 import AddLesson from "./views/AddLesson.vue";
 import EditLesson from "./views/EditLesson.vue"; */
+=======
+>>>>>>> 26d75e3f1b6d3ef391324ba528f6c92eb602e0f3
 import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
 import AdminAdd from "./views/AdminAdd.vue"
 
 // Import layouts
-import SimpleLayout from "./layouts/SimpleLayout.vue";
 import AdminLayout from "./layouts/AdminLayout.vue";
 import StudentLayout from "./layouts/StudentLayout.vue";
 
