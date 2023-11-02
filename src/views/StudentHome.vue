@@ -4,16 +4,61 @@
 * - Eli
 */
     import RequestForm from "../components/RequestForm.vue";
+    import Permissions from "../components/Permissions.vue";
+    import MenuBar from "../components/MenuBar.vue";
+    import SideBar from "../components/SideBar.vue";
     import router from "../router";
-    import { ref } from "vue";
-    import RequestServices from "../services/requestServices"
+    import { onMounted, ref } from "vue";
+    import RequestServices from "../services/requestServices";
+    import StudentServices from "../services/studentServices";
     import Utils from "../config/utils";
 
     const user = ref(null);
     const requestForm = ref(false);
+    const permissions = ref(false);
+    const student = ref([]);
     // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
 
+    onMounted(async () => {
+        findStudent();
+    })
+
+    //STUDENT PERMISSION METHODS
+    //retrieve student via user email
+    const findStudent = async() => {
+        user.value = null;
+        user.value = Utils.getStore("user");
+        await StudentServices.getEmail(user.value.email)
+            .then((response) => {
+                student.value = response.data;
+                console.log(student.value);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        console.log(student.value[0].permission);
+        permissions.value = student.value[0].permission ? false : true;
+    }
+
+    const addConsent = async () => {
+        // student.data = null;
+        // student.data = await StudentServices.getEmail(user.value.email);
+        console.log(student.value[0].studentId);
+        const data = {
+            permission: 1,
+            dateSigned: new Date()
+        };
+        console.log(data);
+        user.value = null;
+        user.value = Utils.getStore("user");
+        //console.log(user.value);
+        await StudentServices.update(student.value[0].studentId, data);
+        permissions.value = false;
+    }
+    //END STUDENT PERMISSION METHODS
+
+    //CREATE REQUEST METHODS
     const handleCreate = (selectedSem) => {
         console.log(selectedSem);
         let season = selectedSem.charAt[0] = 'F' ? 'Fall' : 'Spring';
@@ -41,6 +86,7 @@
                 console.log(e.response.data.message);
             });
     };
+    //END CREATE REQUEST METHODS
 
 </script>
 
@@ -83,6 +129,17 @@
                 :semesters="Semesters"
                 @createRequest="handleCreate"
                 @cancel="(requestForm = false)"
+            />
+        </v-dialog>
+        <v-dialog
+            persistent
+            v-model="permissions"
+            activator="parent"
+            width="auto"    
+        >
+            <Permissions
+                @signedForm="addConsent" 
+                @cancel="router.push({name: 'login'})"
             />
         </v-dialog>
     </div>
