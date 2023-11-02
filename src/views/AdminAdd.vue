@@ -1,17 +1,19 @@
 <script setup>
     import accommServices from "../services/accommodationServices.js"
-    import studentServices from "../services/studentServices.js"
     import requestServices from "../services/requestServices.js"
     import {ref, onMounted} from "vue";
     import { useRoute } from 'vue-router'
     import { computed } from 'vue';
 
     const accommodations = ref([]);
-    const student = ref([]);
     const request = ref([]);
     const route = useRoute();
     const params = computed(() => route.params)
     const requestId = route.params.id
+    const season = ref();
+    const year = ref();
+    const fName = ref();
+    const lName = ref();
 
     async function getAccomm() {
         await accommServices.getAll()
@@ -29,18 +31,13 @@
     async function getRequest() {
         await requestServices.getOne(requestId)
             .then((response) => {
+                console.log(request);
                 request.value = response.data;
-                console.log(request.value);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    }
-    async function getStudent() {
-        await studentServices.getOne(request.studentId)
-            .then((response) => {
-                student.value = response.data;
-                console.log(student.value);
+                season.value = request.value.semester.season;
+                year.value = request.value.semester.year;
+                fName.value = request.value.student.fName;
+                lName.value = request.value.student.lName;
+
             })
             .catch((err) => {
                 console.log(err);
@@ -49,7 +46,6 @@
     onMounted(async() =>{
         await getAccomm();
         await getRequest();
-        await getStudent();
     })    
 </script>
 
@@ -60,8 +56,7 @@
             <v-btn class="ml-4" style="float:right" @click="cancel()">cancel</v-btn>
             <v-btn class="mr-4" color="#F9C634" style="float:right" @click="save()">save</v-btn>
         </div>
-        <v-text> {{ student.fName }} {{ student.lName }}</v-text>
-        <!-- <v-text>{{ semseter.season }} {{ semester.year }}</v-text> -->
+        <v-text> {{ fName }} {{ lName }} {{ season }} {{ year }} </v-text>
     </div>
 
     <div class="ml-10 mr-16">
