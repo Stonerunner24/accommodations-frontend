@@ -1,11 +1,14 @@
 <script setup>
     import accommServices from "../services/accommodationServices.js"
+    import studentServices from "../services/studentServices.js"
+    import requestServices from "../services/requestServices.js"
     import {ref, onMounted} from "vue";
     import { useRoute } from 'vue-router'
     import { computed } from 'vue';
 
-    const accommodations = ref([])
+    const accommodations = ref([]);
     const student = ref([]);
+    const request = ref([]);
     const route = useRoute();
     const params = computed(() => route.params)
     const requestId = route.params.id;
@@ -23,8 +26,30 @@
                 console.log(err);
             })
     }
+    async function getRequest() {
+        await requestServices.getOne(requestId)
+            .then((response) => {
+                request.value = response.data;
+                console.log(request.value);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
+    async function getStudent() {
+        await studentServices.getOne(request.studentId)
+            .then((response) => {
+                student.value = response.data;
+                console.log(student.value);
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
     onMounted(async() =>{
         await getAccomm();
+        await getRequest();
+        await getStudent();
     })
     
 </script>
@@ -36,7 +61,7 @@
             <v-btn class="ml-4" style="float:right">cancel</v-btn>
             <v-btn class="mr-4" color="#F9C634" style="float:right">save</v-btn>
         </div>
-        <v-text> {{ requestId }}</v-text>
+        <v-text> {{ student.fName }}</v-text>
         <v-text>{{ semseter }} Fall 2023</v-text>
     </div>
 
