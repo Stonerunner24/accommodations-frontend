@@ -4,18 +4,57 @@
 * - Eli
 */
     import RequestForm from "../components/RequestForm.vue";
+    import Permissions from "../components/Permissions.vue";
     import MenuBar from "../components/MenuBar.vue";
     import SideBar from "../components/SideBar.vue";
     import router from "../router";
-    import { ref } from "vue";
-    import RequestServices from "../services/requestServices"
+    import { onMounted, ref } from "vue";
+    import RequestServices from "../services/requestServices";
+    import StudentServices from "../services/studentServices";
     import Utils from "../config/utils";
 
     const user = ref(null);
     const requestForm = ref(false);
+    const permissions = ref(false);
     // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
 
+    onMounted(async () => {
+        findStudent();
+    })
+
+    //STUDENT PERMISSION METHODS
+    //retrieve student via user email
+    const findStudent = async() => {
+        try{
+            user.value = null;
+            user.value = Utils.getStore("user");
+            const student = await StudentServices.getEmail(user.value.email);
+            console.log(student.data);
+            permissions.value = student.data.permission = null ? false : true; 
+
+        }
+        catch(error){
+            console.error(error);
+        }
+        
+    }
+
+    const addConsent = () => {
+        const data = {
+            permission: 1,
+            datSigned: new Date()
+        };
+        console.log(data);
+        user.value = null;
+        user.value = Utils.getStore("user");
+        console.log(user.value);
+        const student = StudentServices.update(user.value.userId, data);
+        permissions.value = false;
+    }
+    //END STUDENT PERMISSION METHODS
+
+    //CREATE REQUEST METHODS
     const handleCreate = (selectedSem) => {
         console.log(selectedSem);
         let season = selectedSem.charAt[0] = 'F' ? 'Fall' : 'Spring';
@@ -43,12 +82,13 @@
                 console.log(e.response.data.message);
             });
     };
+    //END CREATE REQUEST METHODS
 
 </script>
 
 <template>
-    <MenuBar />
-    <SideBar />
+    <!-- <MenuBar />
+    <SideBar /> -->
     
     <div class="pa-5">
         <div class="pa-7">
@@ -88,6 +128,17 @@
                 :semesters="Semesters"
                 @createRequest="handleCreate"
                 @cancel="(requestForm = false)"
+            />
+        </v-dialog>
+        <v-dialog
+            persistent
+            v-model="permissions"
+            activator="parent"
+            width="auto"    
+        >
+            <Permissions
+                @signedForm="addConsent" 
+                @cancel="router.push({name: 'login'})"
             />
         </v-dialog>
     </div>

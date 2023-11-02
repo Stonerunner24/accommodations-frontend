@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 // Import views
 import Login from "./views/Login.vue";
-import RequestForm from "./views/RequestForm.vue";
+//import RequestForm from "./views/RequestForm.vue";
 
 /*import TutorialsList from "./views/TutorialsList.vue";
 import EditTutorial from "./views/EditTutorial.vue";
@@ -38,11 +38,6 @@ const router = createRouter({
           path: '', 
           name: 'studentHome', 
           component: StudentHome 
-        },
-        {
-          path: "makeRequest",
-          name: "makeRequest",
-          component: RequestForm
         },
       ],
     },
