@@ -16,6 +16,7 @@
     const user = ref(null);
     const requestForm = ref(false);
     const permissions = ref(false);
+    const student = ref([]);
     // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
 
@@ -26,30 +27,33 @@
     //STUDENT PERMISSION METHODS
     //retrieve student via user email
     const findStudent = async() => {
-        try{
-            user.value = null;
-            user.value = Utils.getStore("user");
-            const student = await StudentServices.getEmail(user.value.email);
-            console.log(student.data);
-            permissions.value = student.data.permission = null ? false : true; 
-
-        }
-        catch(error){
-            console.error(error);
-        }
-        
+        user.value = null;
+        user.value = Utils.getStore("user");
+        await StudentServices.getEmail(user.value.email)
+            .then((response) => {
+                student.value = response.data;
+                console.log(student.value);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+        console.log(student.value[0].permission);
+        permissions.value = student.value[0].permission ? false : true;
     }
 
-    const addConsent = () => {
+    const addConsent = async () => {
+        // student.data = null;
+        // student.data = await StudentServices.getEmail(user.value.email);
+        console.log(student.value[0].studentId);
         const data = {
             permission: 1,
-            datSigned: new Date()
+            dateSigned: new Date()
         };
         console.log(data);
         user.value = null;
         user.value = Utils.getStore("user");
-        console.log(user.value);
-        const student = StudentServices.update(user.value.userId, data);
+        //console.log(user.value);
+        await StudentServices.update(student.value[0].studentId, data);
         permissions.value = false;
     }
     //END STUDENT PERMISSION METHODS
