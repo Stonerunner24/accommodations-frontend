@@ -90,10 +90,7 @@
 
 </script>
 
-<template>
-    <!-- <MenuBar />
-    <SideBar /> -->
-    
+<template>    
     <div class="pa-5">
         <div class="pa-7">
             <p  class="text-h6 text-left">

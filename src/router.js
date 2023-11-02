@@ -14,7 +14,6 @@ import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
 
 // Import layouts
-import SimpleLayout from "./layouts/SimpleLayout.vue";
 import AdminLayout from "./layouts/AdminLayout.vue";
 import StudentLayout from "./layouts/StudentLayout.vue";
 
