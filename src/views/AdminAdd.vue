@@ -11,7 +11,7 @@
     const request = ref([]);
     const route = useRoute();
     const params = computed(() => route.params)
-    const requestId = route.params.id;
+    const requestId = route.params.id
 
     async function getAccomm() {
         await accommServices.getAll()
