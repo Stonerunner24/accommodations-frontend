@@ -3,7 +3,6 @@ import { ref, onMounted } from 'vue';
 import RequestServices from '../services/requestServices.js';
 import moment from 'moment';
 import CloseModal from '../components/CloseModal.vue'
-import { defineProps } from 'vue';
 import router from '../router';
 
 // Holds all open requests with their associated Student

@@ -50,19 +50,18 @@
         await getAccomm();
         await getRequest();
         await getStudent();
-    })
-    
+    })    
 </script>
 
 <template>
     <div class="ma-6">
         <div>
             <v-text class="text-h5" style="font-weight: bold;">Add Accommodations</v-text>
-            <v-btn class="ml-4" style="float:right">cancel</v-btn>
-            <v-btn class="mr-4" color="#F9C634" style="float:right">save</v-btn>
+            <v-btn class="ml-4" style="float:right" @click="cancel()">cancel</v-btn>
+            <v-btn class="mr-4" color="#F9C634" style="float:right" @click="save()">save</v-btn>
         </div>
-        <v-text> {{ student.fName }}</v-text>
-        <v-text>{{ semseter }} Fall 2023</v-text>
+        <v-text> {{ student.fName }} {{ student.lName }}</v-text>
+        <!-- <v-text>{{ semseter.season }} {{ semester.year }}</v-text> -->
     </div>
 
     <div class="ml-10 mr-16">
@@ -120,7 +119,16 @@
     </div>
 
     <div class="ma-6">
-        <v-btn class="ml-4" style="float:right">cancel</v-btn>
-        <v-btn class="mr-4" color="#F9C634" style="float:right">save</v-btn>
+        <v-btn class="ml-4" style="float:right" @click="cancel()">cancel</v-btn>
+        <v-btn class="mr-4" color="#F9C634" style="float:right" @click="save()">save</v-btn>
     </div>
 </template>
+
+<script>
+    function cancel(){
+        console.log('canceled')
+    }
+    function save(){
+        console.log('saved')
+    }
+</script>
