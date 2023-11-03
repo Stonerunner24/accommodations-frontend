@@ -1,6 +1,7 @@
 <script setup>
     import accommServices from "../services/accommodationServices.js"
     import requestServices from "../services/requestServices.js"
+    import studentAccomServices from "../services/studentAccomServices"
     import {ref, onMounted} from "vue";
     import { useRoute } from 'vue-router'
     import { computed } from 'vue';
@@ -56,7 +57,9 @@
             <v-btn class="ml-4" style="float:right" @click="cancel()">cancel</v-btn>
             <v-btn class="mr-4" color="#F9C634" style="float:right" @click="save()">save</v-btn>
         </div>
-        <v-text> {{ fName }} {{ lName }} {{ season }} {{ year }} </v-text>
+        <v-text style="font-weight: bold;"> {{ fName }} {{ lName }} </v-text>
+        <br>
+        <v-text> {{ season }} {{ year }} </v-text>
     </div>
 
     <div class="ml-10 mr-16">
@@ -124,6 +127,10 @@
         console.log('canceled')
     }
     function save(){
-        console.log('saved')
+        console.log('saving...')
+
+        
+
+        console.log('saved.')
     }
 </script>
