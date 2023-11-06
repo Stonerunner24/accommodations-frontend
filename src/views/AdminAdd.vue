@@ -5,6 +5,7 @@
     import {ref, onMounted} from "vue";
     import { useRoute } from 'vue-router'
     import { computed } from 'vue';
+    import router from '../router';
 
     const accommodations = ref([]);
     const request = ref([]);
@@ -20,7 +21,7 @@
         await accommServices.getAll()
             .then((response) => {
                 accommodations.value = response.data;
-                console.log(accommodations.value);
+                console.log('accommodations: ' + accommodations.toString(s));
                 accommodations.value.forEach((accomm) => {
                     accomm.chapelChkBox = false;
                 })
@@ -48,29 +49,45 @@
         await getAccomm();
         await getRequest();
     })    
+
+    const selectedAccommodations = ref({
+        Academic: [],
+        Chapel: [],
+        Housing: [],
+    });
+
+    function cancel(){
+        router.push({ name: 'adminHome'});
+    }
+    function save(){
+        let checkedAccommodations = selectedAccommodations.Academic;
+        console.log(checkedAccommodations);
+
+    }
 </script>
 
 <template>
     <div class="ma-6">
         <div>
-            <v-text class="text-h5" style="font-weight: bold;">Add Accommodations</v-text>
+            <p class="text-h5" style="font-weight: bold;">Add Accommodations</p>
             <v-btn class="ml-4" style="float:right" @click="cancel()">cancel</v-btn>
             <v-btn class="mr-4" color="#F9C634" style="float:right" @click="save()">save</v-btn>
         </div>
-        <v-text style="font-weight: bold;"> {{ fName }} {{ lName }} </v-text>
+        <p style="font-weight: bold;"> {{ fName }} {{ lName }} </p>
         <br>
-        <v-text> {{ season }} {{ year }} </v-text>
+        <p> {{ season }} {{ year }} </p>
     </div>
 
     <div class="ml-10 mr-16">
         <div class="pb-5">
-            <v-text class="text-h6">Academic</v-text>
+            <p class="text-h6">Academic</p>
             <div>
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
-                    <div v-for="a in accommodations">
+                    <div v-for="a in accommodations" :key="a.id">
                         <v-checkbox 
                             v-if="a.categoryName == 'Academic'"
-                            v-model="a.chapelChkBox"
+                            v-model="selectedAccommodations.Academic"
+                            :value="a.id"
                             :label="a.title" 
                             color="primary" 
                             style="font-weight: bold; color:black">
@@ -81,14 +98,14 @@
         </div>
 
         <div class="pb-5">
-            <v-text class="text-h6">Chapel</v-text>
+            <p class="text-h6">Chapel</p>
             <div>
                 <!-- v-for through student accommodations that are of the chapel specification -->
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
                     <div v-for="a in accommodations">
                         <v-checkbox 
                             v-if="a.categoryName == 'Chapel'"
-                            v-model="a.chapelChkBox"
+                            v-model="selectedAccommodations.Chapel"
                             :label="a.title" 
                             color="primary" 
                             style="font-weight: bold; color:black">
@@ -99,13 +116,13 @@
         </div>        
 
         <div class="pb-5">
-            <v-text class="text-h6">Housing</v-text>
+            <p class="text-h6">Housing</p>
             <div>
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
                     <div v-for="a in accommodations">
                         <v-checkbox 
                             v-if="a.categoryName == 'Housing'"
-                            v-model="a.chapelChkBox"
+                            v-model="selectedAccommodations.Housing"
                             :label="a.title" 
                             color="primary" 
                             style="font-weight: bold; color:black">
@@ -121,16 +138,3 @@
         <v-btn class="mr-4" color="#F9C634" style="float:right" @click="save()">save</v-btn>
     </div>
 </template>
-
-<script>
-    function cancel(){
-        console.log('canceled')
-    }
-    function save(){
-        console.log('saving...')
-
-        
-
-        console.log('saved.')
-    }
-</script>
