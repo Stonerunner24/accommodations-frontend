@@ -21,7 +21,7 @@
         await accommServices.getAll()
             .then((response) => {
                 accommodations.value = response.data;
-                console.log('accommodations: ' + accommodations.toString(s));
+                console.log('accommodations: ', accommodations.value);
                 accommodations.value.forEach((accomm) => {
                     accomm.chapelChkBox = false;
                 })
@@ -48,21 +48,53 @@
     onMounted(async() =>{
         await getAccomm();
         await getRequest();
-    })    
+    })  
 
-    const selectedAccommodations = ref({
-        Academic: [],
-        Chapel: [],
-        Housing: [],
-    });
+    const selectedAccommodations = ref([]);
+
+    // const selectedAccommodations = ref({
+    //     Academic: [],
+    //     Chapel: [],
+    //     Housing: [],
+    // });
 
     function cancel(){
         router.push({ name: 'adminHome'});
     }
-    function save(){
-        let checkedAccommodations = selectedAccommodations.Academic;
-        console.log(checkedAccommodations);
 
+    function save(){
+        
+        let studentAccomData = {
+            accomId: null,
+            data: null,
+            createdAt: null,
+            updatedAt: null,
+            semesterId: null,
+            studentId: null,
+        }
+        
+        let checkedAccommodations = selectedAccommodations.value;
+        console.log('selected accom', checkedAccommodations)
+
+        for(let i = 0; i < selectedAccommodations.value.length; i++){
+            console.log('here')
+            if (selectedAccommodations.value[i]) {
+                let accom = findAccomById(i);
+                studentAccomData.accomId = accom.accomId;
+                studentAccomData.data = null;           
+                studentAccomData.semesterId = request.value.semesterId;
+                studentAccomData.studentId = request.value.studentId;
+
+                studentAccomServices.create(studentAccomData);
+            }
+        }
+    }
+    
+    function findAccomById(id) {
+        for (let a of accommodations.value){
+            if (a.accomId == id) return a;
+        }
+        return null;
     }
 </script>
 
@@ -86,7 +118,7 @@
                     <div v-for="a in accommodations" :key="a.id">
                         <v-checkbox 
                             v-if="a.categoryName == 'Academic'"
-                            v-model="selectedAccommodations.Academic"
+                            v-model="selectedAccommodations[a.accomId]"
                             :value="a.id"
                             :label="a.title" 
                             color="primary" 
@@ -102,10 +134,11 @@
             <div>
                 <!-- v-for through student accommodations that are of the chapel specification -->
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
-                    <div v-for="a in accommodations">
+                    <div v-for="a in accommodations" :key="a.id">
                         <v-checkbox 
                             v-if="a.categoryName == 'Chapel'"
-                            v-model="selectedAccommodations.Chapel"
+                            v-model="selectedAccommodations[a.accomId]"
+                            :value="a.id"
                             :label="a.title" 
                             color="primary" 
                             style="font-weight: bold; color:black">
@@ -119,10 +152,10 @@
             <p class="text-h6">Housing</p>
             <div>
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
-                    <div v-for="a in accommodations">
+                    <div v-for="a in accommodations" :key="a.id">
                         <v-checkbox 
                             v-if="a.categoryName == 'Housing'"
-                            v-model="selectedAccommodations.Housing"
+                            v-model="selectedAccommodations[a.accomId]"
                             :label="a.title" 
                             color="primary" 
                             style="font-weight: bold; color:black">
