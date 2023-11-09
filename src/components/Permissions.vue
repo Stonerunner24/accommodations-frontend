@@ -24,7 +24,7 @@
                 >
             </v-text-field>
             <v-btn
-                :disabled="!permissionBox"
+                :disabled="!permissionBox || !studentId"
                 @click="$emit('signedForm', studentId)"
                 rounded="lg"
                 elevation="2"
