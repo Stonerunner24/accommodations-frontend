@@ -75,19 +75,23 @@
         
         let checkedAccommodations = selectedAccommodations.value;
         console.log('selected accom', checkedAccommodations)
+        console.log(request.value);
 
         for(let i = 0; i < selectedAccommodations.value.length; i++){
-            console.log('here')
-            if (selectedAccommodations.value[i]) {
+             if (selectedAccommodations.value[i]) {
                 let accom = findAccomById(i);
                 studentAccomData.accomId = accom.accomId;
-                studentAccomData.data = null;           
+                studentAccomData.data = null;
+                studentAccomData.createdAt = new Date(),
+                studentAccomServices.updatedAt = new Date(),
                 studentAccomData.semesterId = request.value.semesterId;
                 studentAccomData.studentId = request.value.studentId;
 
                 studentAccomServices.create(studentAccomData);
             }
         }
+
+        router.push({ name: 'adminHome'});
     }
     
     function findAccomById(id) {
