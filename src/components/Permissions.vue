@@ -1,6 +1,7 @@
 <script setup>
     import { ref } from 'vue';
     const permissionBox = ref(null);
+    const studentId = ref(null);
 </script>
 
 <template>
@@ -17,9 +18,14 @@
                 color="#118ACB"
             >
             </v-checkbox>
+            <v-text-field 
+                label="Student ID"
+                v-model="studentId"
+                >
+            </v-text-field>
             <v-btn
-                :disabled="!permissionBox"
-                @click="$emit('signedForm')"
+                :disabled="!permissionBox || !studentId"
+                @click="$emit('signedForm', studentId)"
                 rounded="lg"
                 elevation="2"
                 style="background-color: #118ACB;
