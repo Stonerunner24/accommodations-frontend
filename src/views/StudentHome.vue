@@ -140,7 +140,7 @@
             <p  class="text-h6 text-left">
                 My Requests
                 <v-btn 
-                    @click.stop="requestForm = true" 
+                    @click="requestForm = true" 
                     class="mr-15" 
                     rounded="lg" 
                     elevation="2" 
@@ -166,7 +166,6 @@
         </v-card>
         <v-dialog
             v-model="requestForm"
-            activator="parent"
             width="auto"
             >
             <RequestForm 
@@ -178,7 +177,6 @@
         <v-dialog
             persistent
             v-model="permissions"
-            activator="parent"
             width="auto"    
         >
             <Permissions
