@@ -33,27 +33,71 @@
             .then((response) => {
                 student.value = response.data;
                 console.log(student.value);
+                if(!student.value[0].permission){
+                    permissions.value = true;
+                }
             })
+            .catch(async (err) => {
+                if(err.response && err.response.status === 404){
+                    console.log(err);
+                    permissions.value = true;
+                }
+            });
+        // console.log(student.value[0].permission);
+        // permissions.value = student.value[0].permission ? false : true;
+    }
+
+    const createStudent = async (studentId) => {
+        console.log('entering student creation');
+        user.value = null;
+        user.value = Utils.getStore("user");
+        const data = {
+            studentId: studentId,
+            fName: user.value.fName,
+            lName: user.value.lName,
+            email: user.value.email,
+            permission: 1,
+            version: 1.1,
+        };
+        await StudentServices.create(data)
             .catch((err) => {
                 console.error(err);
             });
-        console.log(student.value[0].permission);
-        permissions.value = student.value[0].permission ? false : true;
+        student.value = null;
+        await StudentServices.getOne(studentId)
+            .then((response) => {
+                student.value = response.data;
+                console.log(student.value);
+            });
+        console.log(student);
+        return student;
     }
 
-    const addConsent = async () => {
-        // student.data = null;
-        // student.data = await StudentServices.getEmail(user.value.email);
-        console.log(student.value[0].studentId);
-        const data = {
-            permission: 1,
-            dateSigned: new Date()
-        };
-        console.log(data);
-        user.value = null;
-        user.value = Utils.getStore("user");
-        //console.log(user.value);
-        await StudentServices.update(student.value[0].studentId, data);
+    const addConsent = async (studentId) => {
+        console.log('adding consent');
+        student.value = null;
+        await StudentServices.getOne(studentId)
+            .then(async (response) => {
+                student.value = response.data;
+                const data = {
+                    permission: 1,
+                    dateSigned: new Date()
+                };
+                console.log(data);
+                user.value = null;
+                user.value = Utils.getStore("user");
+                //console.log(user.value);
+                await StudentServices.update(studentId, data);
+            })
+            .catch(async (err) => {
+                console.log(err);
+                if(err.response && err.response.status === 404){
+                    await createStudent(studentId)
+                        .then((response) => {
+                            student.value = response.data;
+                        });
+                }
+            });
         permissions.value = false;
     }
     //END STUDENT PERMISSION METHODS
