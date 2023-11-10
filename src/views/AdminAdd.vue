@@ -7,10 +7,12 @@
     import { computed } from 'vue';
     import router from '../router';
     import Utils from "../config/utils";
+    import accomCatServices from "../services/accomCatServices";
 
     const accommodations = ref([]);
     const request = ref([]);
     const route = useRoute();
+    const accomCategory = ref([]);
     const params = computed(() => route.params)
     const requestId = route.params.id
     const season = ref();
@@ -47,9 +49,20 @@
                 console.log(err);
             })
     }
+    async function getAccomCat(){
+        await accomCatServices.getAll()
+            .then((response) => {
+                console.log(response);
+                accomCategory.value= response.data;
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+    }
     onMounted(async() =>{
         await getAccomm();
         await getRequest();
+        await getAccomCat();
     })  
 
     const selectedAccommodations = ref([]);
@@ -106,18 +119,19 @@
             <v-btn class="mr-4" color="#F9C634" style="float:right" @click="save()">save</v-btn>
         </div>
         <p style="font-weight: bold;"> {{ fName }} {{ lName }} </p>
-        <br>
+
         <p> {{ season }} {{ year }} </p>
     </div>
 
-    <div class="ml-10 mr-16">
+    <div v-for="ac in accomCategory">
+        <div class="ml-10 mr-16">
         <div class="pb-5">
-            <p class="text-h6">Academic</p>
+            <p class="text-h6">{{ ac.name }}</p>
             <div>
                 <v-card class="rounded-0" style="background-color:#D5DFE7">
                     <div v-for="a in accommodations" :key="a.id">
                         <v-checkbox 
-                            v-if="a.categoryName == 'Academic'"
+                            v-if="a.categoryName == ac.name"
                             v-model="selectedAccommodations[a.accomId]"
                             :value="a.id"
                             :label="a.title" 
@@ -127,43 +141,8 @@
                     </div>                
                 </v-card>
             </div>
-        </div>
-
-        <div class="pb-5">
-            <p class="text-h6">Chapel</p>
-            <div>
-                <!-- v-for through student accommodations that are of the chapel specification -->
-                <v-card class="rounded-0" style="background-color:#D5DFE7">
-                    <div v-for="a in accommodations" :key="a.id">
-                        <v-checkbox 
-                            v-if="a.categoryName == 'Chapel'"
-                            v-model="selectedAccommodations[a.accomId]"
-                            :value="a.id"
-                            :label="a.title" 
-                            color="primary" 
-                            style="font-weight: bold; color:black">
-                    </v-checkbox>
-                    </div>
-                </v-card>
-            </div>
-        </div>        
-
-        <div class="pb-5">
-            <p class="text-h6">Housing</p>
-            <div>
-                <v-card class="rounded-0" style="background-color:#D5DFE7">
-                    <div v-for="a in accommodations" :key="a.id">
-                        <v-checkbox 
-                            v-if="a.categoryName == 'Housing'"
-                            v-model="selectedAccommodations[a.accomId]"
-                            :label="a.title" 
-                            color="primary" 
-                            style="font-weight: bold; color:black">
-                    </v-checkbox>
-                    </div>
-                </v-card>
-            </div>
-        </div>
+        </div>      
+    </div>  
     </div>
 
     <div class="ma-6">
