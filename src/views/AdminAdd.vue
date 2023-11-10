@@ -6,6 +6,7 @@
     import { useRoute } from 'vue-router'
     import { computed } from 'vue';
     import router from '../router';
+    import Utils from "../config/utils";
 
     const accommodations = ref([]);
     const request = ref([]);
@@ -16,6 +17,7 @@
     const year = ref();
     const fName = ref();
     const lName = ref();
+    let user = Utils.getStore("user");
 
     async function getAccomm() {
         await accommServices.getAll()
@@ -52,12 +54,6 @@
 
     const selectedAccommodations = ref([]);
 
-    // const selectedAccommodations = ref({
-    //     Academic: [],
-    //     Chapel: [],
-    //     Housing: [],
-    // });
-
     function cancel(){
         router.push({ name: 'adminHome'});
     }
@@ -90,7 +86,7 @@
                 studentAccomServices.create(studentAccomData);
             }
         }
-
+        requestServices.update( requestId , {approvedBy: (user.fName, ' ', user.lName),status: 'Closed'});
         router.push({ name: 'adminHome'});
     }
     
