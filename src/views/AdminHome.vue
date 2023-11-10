@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import RequestServices from '../services/requestServices.js';
 import moment from 'moment';
 import CloseModal from '../components/CloseModal.vue'
+import router from '../router';
 
 // Holds all open requests with their associated Student
 const openRequests = ref([]);
@@ -11,6 +12,7 @@ const openReqBool = ref(false);
 const closedReqBool = ref(false);
 const closeModal = ref(false);
 const selectedRequest = ref(null);
+let requestData = ref(null);
 
 onMounted(async () => {
   loadRequests();
@@ -33,6 +35,8 @@ const loadRequests = async () => {
     closedRequests.value = response2.data;
     // Set boolean based on data length
     closedReqBool.value = (response2.data.length > 0);
+
+    requestData = response.data;
   } catch (error) {
     console.error(error);
   }
@@ -46,6 +50,9 @@ const addAccom = (request) => {
   // Add code here to change the route. 
   // Pass in the request object so you can get the student info??
   // Can change the parameters of this if necessary
+
+  router.push({ name: 'adminAdd', params: { id: request.requestId }});
+
   console.log(request);
 }
 
@@ -98,7 +105,7 @@ const closeRequest = (request) => {
               v-for="request in openRequests"
               :key="request.studentId">
               <td>{{ `${request.student.fName} ${request.student.lName}` }}</td>
-              <td>{{ request.studentId }}</td>
+              <td student-id={{request.studendId}}>{{ request.studentId }}</td>
               <td>{{ request.student.email }}</td>
               <td>{{ formatDate(request.dateMade) }}</td>
               <td>
@@ -166,6 +173,8 @@ const closeRequest = (request) => {
       @handleClose="closeRequest(selectedRequest)"
       @cancel="(closeModal=false),(selectedRequest=null)" />      
   </v-dialog>
+
+  <AdminAdd :requestProp="requestData"></AdminAdd>
   </template>
 <style>
 </style>
