@@ -13,6 +13,7 @@ import EditLesson from "./views/EditLesson.vue"; */
 import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
 import AdminAdd from "./views/AdminAdd.vue"
+import AdminAccomManage from "./views/AdminAccomManage.vue"
 
 // Import layouts
 import AdminLayout from "./layouts/AdminLayout.vue";
@@ -55,6 +56,13 @@ const router = createRouter({
           path: 'adminAdd/:id',
           name: 'adminAdd',
           component: AdminAdd,
+          // props: {route} => {{ request: route.request.requestId}}
+        },
+        {
+          // :id is the id of the request which is being added to 
+          path: 'adminAccomManage/',
+          name: 'adminAccomManage',
+          component: AdminAccomManage,
           // props: {route} => {{ request: route.request.requestId}}
         },
       ],
