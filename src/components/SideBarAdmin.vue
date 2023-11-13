@@ -9,7 +9,7 @@ import router from "../router";
  **************/
 const goHome = () => {
     console.log("button pressed"); 
-    router.push({name: 'studentHome'});
+    router.push({name: 'adminHome'});
 };
 
 </script>
@@ -43,12 +43,19 @@ const goHome = () => {
                 </v-expansion-panel>
                 <v-expansion-panel
                     bg-color="sidebar"
-                    title="FAQ" 
+                    title="Maintenance" 
                 >
                     <v-expansion-panel-text class="mx-n4 my-n2">
                         <v-list style="padding-top: 1px; padding-bottom: 1px;">
-                            <v-list-item title="View FAQs" @click="" density="compact" width="100%">
+                            <v-list-item title="Accommodation Categories" @click="" density="compact" width="100%">
                             </v-list-item>
+                            <v-list-item title="Students" @click="" density="compact" width="100%">
+                            </v-list-item>
+                            <v-list-item title="Faculty" @click="" density="compact" width="100%">
+                            </v-list-item>
+                            <v-list-item title="Semesters" @click="" density="compact" width="100%">
+                            </v-list-item>
+
                         </v-list>
                     </v-expansion-panel-text>
                 </v-expansion-panel>
