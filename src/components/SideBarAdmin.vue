@@ -12,6 +12,26 @@ const goHome = () => {
     router.push({name: 'adminHome'});
 };
 
+const manageAccom = () => {
+    router.push({name: 'adminAccomManage'});
+};
+
+const manageCategory = () => {
+    console.log('navigate to manage Category');
+};
+
+const manageStudent = () => {
+    console.log('navigate to manage student');
+};
+
+const manageFaculty = () => {
+    console.log('navigate to manage faculty');
+};
+
+const manageSemester = () => {
+    console.log('navigate to manage semesters');
+};
+
 </script>
 <template>
     <div>
@@ -47,13 +67,15 @@ const goHome = () => {
                 >
                     <v-expansion-panel-text class="mx-n4 my-n2">
                         <v-list style="padding-top: 1px; padding-bottom: 1px;">
-                            <v-list-item title="Accommodation Categories" @click="" density="compact" width="100%">
+                            <v-list-item title="Accommodations" @click="manageAccom()" density="compact" width="100%">
                             </v-list-item>
-                            <v-list-item title="Students" @click="" density="compact" width="100%">
+                            <v-list-item title="Categories" @click="manageCategory()" density="compact" width="100%">
                             </v-list-item>
-                            <v-list-item title="Faculty" @click="" density="compact" width="100%">
+                            <v-list-item title="Students" @click="manageStudent()" density="compact" width="100%">
                             </v-list-item>
-                            <v-list-item title="Semesters" @click="" density="compact" width="100%">
+                            <v-list-item title="Faculty" @click="manageFaculty()" density="compact" width="100%">
+                            </v-list-item>
+                            <v-list-item title="Semesters" @click="manageSemester()" density="compact" width="100%">
                             </v-list-item>
 
                         </v-list>
