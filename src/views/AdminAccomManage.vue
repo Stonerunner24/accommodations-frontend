@@ -28,17 +28,19 @@
         await getAccomCat();
     }) 
     function save(){
+        console.log(select.value)
+
         let accomData = {
-            categoryName: select.value.name,
+            categoryName: select.value,
             title: textTitle,
             description: textDescription,
-            explanationFile: null,
+            explanationFile: '',
             createdAt: new Date(),
             updatedAt: new Date(),
         };
         console.log('accom: ', accomData)
         accommodationServices.create(accomData);
-        router.push({ name: 'adminHome'});
+       router.push({ name: 'adminHome'});
     }
     function cancel(){
         router.push({ name: 'adminHome'});
@@ -46,6 +48,7 @@
 </script>
 
 <template>
+    <p>{{ select }}</p>
     <div>
         <v-title class="text-h5" style="font-weight: bold;">Manage Accommodations</v-title>
     </div>
