@@ -7,8 +7,8 @@
     const accomCategory = ref([]);
     const catNames = ref([]);
 
-    let textTitle = '';
-    let textDescription = '';
+    let textTitle = ref('');
+    let textDescription = ref('');
     const select = ref(null);
 
     async function getAccomCat(){
@@ -32,8 +32,8 @@
 
         let accomData = {
             categoryName: select.value,
-            title: textTitle,
-            description: textDescription,
+            title: textTitle.value,
+            description: textDescription.value,
             explanationFile: '',
             createdAt: new Date(),
             updatedAt: new Date(),
@@ -48,7 +48,6 @@
 </script>
 
 <template>
-    <p>{{ select }}</p>
     <div>
         <v-title class="text-h5" style="font-weight: bold;">Manage Accommodations</v-title>
     </div>
@@ -64,7 +63,7 @@
                     label="select a category"
                     v-model="select"
                 ></v-combobox>
-                <p v-else>Loading categories...</p>
+                <p v-else>No categories...</p>
             </div>
             <div>
                 <p class="pl-5" style="font-weight: bold;">Title</p>
