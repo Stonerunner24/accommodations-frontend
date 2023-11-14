@@ -5,6 +5,9 @@ export default{
     getAll(){
         return apiClient.get(baseURL);
     },
+    getOne(requestId){
+        return apiClient.get(baseURL + `requestId/${requestId}`);
+    },
     getAllForStudent(studentId){
         return apiClient.get(baseURL + `studentReq/${studentId}`);
     },
