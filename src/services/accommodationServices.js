@@ -14,7 +14,7 @@ export default{
     update(accommId, data){
         return apiClient.put(baseURL + `${accommId}`, data);
     },
-    delete(acommId){
+    delete(accommId){
         console.log('deleting');
         return apiClient.delete(baseURL+`${accommId}`);
     },
