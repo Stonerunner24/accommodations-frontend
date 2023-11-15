@@ -1,11 +1,11 @@
 <script setup>
+import {ref, onMounted} from "vue";
     // export default{
     //    props: {
     //     semesters: Object
     //    }, 
     //    emits: ['createRequest', 'cancel']
     // }
-    import {ref, defineProps, } from 'vue';
     const selectedSem = ref(null);
     const props = defineProps({
         semesters: Array,
