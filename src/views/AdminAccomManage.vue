@@ -40,10 +40,10 @@
         };
         console.log('accom: ', accomData)
         accommodationServices.create(accomData);
-       router.push({ name: 'adminHome'});
+       router.push({ name: 'adminViewAccom'});
     }
     function cancel(){
-        router.push({ name: 'adminHome'});
+        router.push({ name: 'adminViewAccom'});
     }
 </script>
 

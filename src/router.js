@@ -10,6 +10,7 @@ import AdminAdd from "./views/AdminAdd.vue"
 import AdminAccomManage from "./views/AdminAccomManage.vue"
 import AdminCatManage from "./views/AdminCatManage.vue"
 import AdminUserManage from "./views/AdminUserManage.vue"
+import AdminViewAccom from "./views/AdminViewAccom.vue"
 
 // Import layouts
 import AdminLayout from "./layouts/AdminLayout.vue";
@@ -68,6 +69,11 @@ const router = createRouter({
           path: 'adminUserManage/',
           name: 'adminUserManage',
           component: AdminUserManage,
+        },
+        {
+          path: 'adminViewAccom/',
+          name: 'adminViewAccom',
+          component: AdminViewAccom,
         },
       ],
     },
