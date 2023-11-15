@@ -5,8 +5,6 @@
 */
     import RequestForm from "../components/RequestForm.vue";
     import Permissions from "../components/Permissions.vue";
-    import MenuBar from "../components/MenuBar.vue";
-    import SideBar from "../components/SideBar.vue";
     import router from "../router";
     import { onMounted, ref } from "vue";
     import RequestServices from "../services/requestServices";
@@ -16,12 +14,16 @@
     const user = ref(null);
     const requestForm = ref(false);
     const permissions = ref(false);
-    const student = ref([]);
+    const student = ref({});
+    const allRequests = ref([]);
+    const openRequestCount = ref(0);
     // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
 
     onMounted(async () => {
-        findStudent();
+        await findStudent();
+        updateOpenRequestCount();
+
     })
 
     //STUDENT PERMISSION METHODS
@@ -31,7 +33,8 @@
         user.value = Utils.getStore("user");
         await StudentServices.getEmail(user.value.email)
             .then((response) => {
-                student.value = response.data;
+                student.value = response.data[0];
+                console.log("inside find student");
                 console.log(student.value);
                 if(!student.value[0].permission){
                     permissions.value = true;
@@ -112,16 +115,20 @@
         requestForm.value = false;
     };
 
-    const createRequest = (season, year) => {
+    const createRequest = async(season, year) => {
+        console.log("made it into the createRequest function");
+        console.log(student.value[0]);
+        
         user.value = null;
         user.value = Utils.getStore("user");
         const data = {
             season: season,
             year: year,
-            email: user.value.email
+            email: user.value.email,
+            //semester: 
         };
         console.log(data);
-        RequestServices.create(data)
+        await RequestServices.create(data)
             .then((response) => {
                 
                 console.log(response.data);
@@ -129,7 +136,45 @@
             .catch((e) => {
                 console.log(e.response.data.message);
             });
-    };
+        /*RequestServices.getAllForStudent(student.value.studentId)
+            .then((response) => {
+                console.log(response.data);
+            })
+            .catch((e) => {
+                console.log(e.response.data.message);
+            });
+            */
+           updateOpenRequestCount();
+        };
+        
+        const initOpenRequestCount = async() =>{
+            await RequestServices.getAllForStudent(student.value.studentId)
+            .then((response) => {
+                allRequests.value = response.data;
+                console.log("this is the openRequests");
+                console.log(allRequests.value);
+                
+            });
+        }
+        const updateOpenRequestCount = async()=> {
+            //openRequestCount.value = 0;
+            await RequestServices.getAllForStudent(student.value.studentId)
+            .then((response) => {
+                allRequests.value = response.data;
+                console.log("this is the openRequests");
+                console.log(allRequests.value);
+                
+            });
+            allRequests.value.forEach((item)=> {
+                if(item.status == "Open"){
+                    openRequestCount.value++;
+                };
+            });
+            
+            
+        };
+        
+    
     //END CREATE REQUEST METHODS
 
 </script>
@@ -158,7 +203,8 @@
             <!--
             <v-text v-if="openRequest == 0">No open requests.</v-text>
             -->
-            <p>No open requests.</p>
+            <p v-if="openRequestCount == 0"> No open requests</p>
+            <p v-else>you have {{ openRequestCount }} open requests</p>
             <!--add a conditional v-else for when open requests > 0 to give a number n of how many requests are open-->
             <!--
             <v-text v-else>{{ openRequest.count }} open requests.</v-text>
