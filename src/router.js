@@ -14,6 +14,7 @@ import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
 import AdminAdd from "./views/AdminAdd.vue"
 import AdminAccomManage from "./views/AdminAccomManage.vue"
+import AdminStudentAccom from "./views/AdminStudentAccom.vue"
 
 // Import layouts
 import AdminLayout from "./layouts/AdminLayout.vue";
@@ -64,6 +65,11 @@ const router = createRouter({
           name: 'adminAccomManage',
           component: AdminAccomManage,
           // props: {route} => {{ request: route.request.requestId}}
+        },
+        {
+          path: 'adminStudentAccom/',
+          name: 'adminStudentAccom',
+          component: AdminStudentAccom,
         },
       ],
     },
