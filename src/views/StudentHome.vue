@@ -181,7 +181,7 @@ import studentAccomServices from "../services/studentAccomServices";
 
 
         const updateOpenRequestCount = async()=> {
-            //openRequestCount.value = 0;
+            openRequestCount.value = 0;
             await RequestServices.getAllForStudent(student.value.studentId)
             .then((response) => {
                 allRequests.value = response.data;
