@@ -211,7 +211,7 @@ import studentAccomServices from "../services/studentAccomServices";
                     semesterAccoms.value.push(item)
                 }
             })
-            console.log(semesterAccoms);
+            
         }
     
     //END CREATE REQUEST METHODS
@@ -283,6 +283,7 @@ import studentAccomServices from "../services/studentAccomServices";
             </p>
         </div>
         <v-card class="pa-7 mr-15" style="background-color: #D5DFE7;">
+        <p v-if="semesterAccoms.length == 0">You have no accommodations for this semester.</p>
         <li v-for="item in semesterAccoms">{{ item.data }}</li>
         </v-card>
         <v-dialog
