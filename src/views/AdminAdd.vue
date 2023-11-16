@@ -98,8 +98,6 @@ async function save() {
                 studentAccomData.semesterId = request.value.semesterId;
             studentAccomData.studentId = request.value.studentId;
 
-            studentAccomServices.create(studentAccomData);
-
             promises.push(studentAccomServices.create(studentAccomData));
         }
     }
