@@ -33,10 +33,10 @@
         user.value = Utils.getStore("user");
         await StudentServices.getEmail(user.value.email)
             .then((response) => {
-                student.value = response.data[0];
+                student.value = response.data;
                 console.log("inside find student");
                 console.log(student.value);
-                if(!student.value[0].permission){
+                if(!student.value.permission){
                     permissions.value = true;
                 }
             })
