@@ -9,6 +9,7 @@
     import { onMounted, ref } from "vue";
     import RequestServices from "../services/requestServices";
     import StudentServices from "../services/studentServices";
+    import StudentAccomServices from "../services/studentAccomServices";
     import Utils from "../config/utils";
 
     const user = ref(null);
@@ -16,13 +17,15 @@
     const permissions = ref(false);
     const student = ref({});
     const allRequests = ref([]);
+    const studentAccoms = ref([]);
     const openRequestCount = ref(0);
     // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
 
     onMounted(async () => {
         await findStudent();
-        updateOpenRequestCount();
+        await updateOpenRequestCount();
+        await getStudentAccoms();
 
     })
 
@@ -34,8 +37,8 @@
         await StudentServices.getEmail(user.value.email)
             .then((response) => {
                 student.value = response.data[0];
-                console.log("inside find student");
-                console.log(student.value);
+                //console.log("inside find student");
+                //console.log(student.value);
                 if(!student.value[0].permission){
                     permissions.value = true;
                 }
@@ -51,7 +54,7 @@
     }
 
     const createStudent = async (studentId) => {
-        console.log('entering student creation');
+        //console.log('entering student creation');
         user.value = null;
         user.value = Utils.getStore("user");
         const data = {
@@ -116,8 +119,8 @@
     };
 
     const createRequest = async(season, year) => {
-        console.log("made it into the createRequest function");
-        console.log(student.value[0]);
+        //console.log("made it into the createRequest function");
+        //console.log(student.value[0]);
         
         user.value = null;
         user.value = Utils.getStore("user");
@@ -147,14 +150,17 @@
            updateOpenRequestCount();
         };
         
-        const initOpenRequestCount = async() =>{
-            await RequestServices.getAllForStudent(student.value.studentId)
-            .then((response) => {
-                allRequests.value = response.data;
-                console.log("this is the openRequests");
-                console.log(allRequests.value);
-                
-            });
+       
+        const getStudentAccoms = async()=>{
+            await StudentAccomServices.getAllForStudent(student.value.studentId)
+            .then((response)=>{
+                console.log("this is the student accom list");
+                console.log(response.data);
+                studentAccoms.value = response.data;
+            })
+            .catch((e) =>{
+                console.log(e.response)
+            })
         }
         const updateOpenRequestCount = async()=> {
             //openRequestCount.value = 0;
