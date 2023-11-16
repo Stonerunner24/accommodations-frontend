@@ -9,20 +9,26 @@
     import { onMounted, ref } from "vue";
     import RequestServices from "../services/requestServices";
     import StudentServices from "../services/studentServices";
+    import StudentAccomServices from "../services/studentAccomServices";
     import Utils from "../config/utils";
+import studentAccomServices from "../services/studentAccomServices";
 
     const user = ref(null);
     const requestForm = ref(false);
     const permissions = ref(false);
     const student = ref({});
     const allRequests = ref([]);
+    const studentAccoms = ref([]);
+    const semesterAccoms = ref([]);
     const openRequestCount = ref(0);
     // Note: Semesters ought to be populated by calling the API and retrieving existing semester objects
     const Semesters = ['FA2023', 'SP2023', 'FA2022', 'SP2022']; 
+    const semesterType = ref();
 
     onMounted(async () => {
         await findStudent();
-        updateOpenRequestCount();
+        await updateOpenRequestCount();
+        await getStudentAccoms();
 
     })
 
@@ -33,10 +39,12 @@
         user.value = Utils.getStore("user");
         await StudentServices.getEmail(user.value.email)
             .then((response) => {
+
                 student.value = response.data;
-                console.log("inside find student");
-                console.log(student.value);
+                //console.log("inside find student");
+                //console.log(student.value);
                 if(!student.value.permission){
+
                     permissions.value = true;
                 }
             })
@@ -51,7 +59,7 @@
     }
 
     const createStudent = async (studentId) => {
-        console.log('entering student creation');
+        //console.log('entering student creation');
         user.value = null;
         user.value = Utils.getStore("user");
         const data = {
@@ -115,9 +123,15 @@
         requestForm.value = false;
     };
 
+    const handleSelectedSemester = () => {
+        console.log(semesterType);
+        
+    }
+    
+
     const createRequest = async(season, year) => {
-        console.log("made it into the createRequest function");
-        console.log(student.value[0]);
+        //console.log("made it into the createRequest function");
+        //console.log(student.value[0]);
         
         user.value = null;
         user.value = Utils.getStore("user");
@@ -145,19 +159,31 @@
             });
             */
            updateOpenRequestCount();
+           getStudentAccoms();
         };
         
-        const initOpenRequestCount = async() =>{
-            await RequestServices.getAllForStudent(student.value.studentId)
-            .then((response) => {
-                allRequests.value = response.data;
-                console.log("this is the openRequests");
-                console.log(allRequests.value);
-                
-            });
-        }
+       
+        const getStudentAccoms = async()=>{
+            await StudentAccomServices.getAllForStudent(student.value.studentId)
+            .then((response)=>{
+                console.log("this is the student accom list");
+                console.log(response.data);
+                studentAccoms.value = response.data;
+                console.log(studentAccoms);
+                console.log("these are the semesters for each request");
+                studentAccoms.value.forEach((item)=>{
+                    console.log(item.semester);
+                })
+            })
+            .catch((e) =>{
+                console.log(e.response)
+            })
+
+        };
+
+
         const updateOpenRequestCount = async()=> {
-            //openRequestCount.value = 0;
+            openRequestCount.value = 0;
             await RequestServices.getAllForStudent(student.value.studentId)
             .then((response) => {
                 allRequests.value = response.data;
@@ -174,6 +200,21 @@
             
         };
         
+        const updateSemesterRequest = async(selectedSem)=>{
+            //semesterAccoms.value = []; 
+            semesterAccoms.value.forEach((item)=>{
+                semesterAccoms.value.pop();
+            })
+            studentAccoms.value.forEach((item)=>{
+                //console.log(item.semester.season.substring(0,1));
+                //console.log(item.semester.year.substring(2));
+                console.log(item.semester.season.substring(0,2).toUpperCase() + item.semester.year);
+                if(item.semester.season.substring(0,2).toUpperCase() + item.semester.year == selectedSem){
+                    semesterAccoms.value.push(item)
+                }
+            })
+            
+        }
     
     //END CREATE REQUEST METHODS
 
@@ -203,12 +244,49 @@
             <!--
             <v-text v-if="openRequest == 0">No open requests.</v-text>
             -->
-            <p v-if="openRequestCount == 0"> No open requests</p>
-            <p v-else>you have {{ openRequestCount }} open requests</p>
+            <p v-if="openRequestCount == 0"> No open requests.</p>
+            <p v-else>You have {{ openRequestCount }} open requests.</p>
             <!--add a conditional v-else for when open requests > 0 to give a number n of how many requests are open-->
             <!--
             <v-text v-else>{{ openRequest.count }} open requests.</v-text>
-            -->
+        -->
+        </v-card>
+        <div class="pa-7">
+        <v-btn
+            @click = "updateSemesterRequest(semesterType)"
+           class="mr-15" 
+           rounded="lg" 
+           elevation="2" 
+           style="background-color:#118ACB; 
+               color:white; 
+               float:right">Choose Semester</v-btn>
+
+            <p  class="text-h6 text-left">
+                My Accomodations.
+                <!--
+                <v-btn 
+                    @click="requestForm = true" 
+                    class="mr-15" 
+                    rounded="lg" 
+                    elevation="2" 
+                    style="background-color:#118ACB; 
+                        color:white; 
+                        float:right"
+                    >
+                    MAKE A REQUEST
+                </v-btn>-->
+                <v-combobox label="Semester"
+                 v-model="semesterType"
+                 :items = "Semesters" 
+                 style = "width:15rem" 
+                 class = "semesterBox"
+                 ></v-combobox>
+
+            </p>
+        </div>
+        <v-card class="pa-7 mr-15" style="background-color: #D5DFE7;">
+        <p v-if="semesterAccoms.length == 0">You have no accommodations for this semester.</p>
+        <li v-for="item in semesterAccoms">{{ item.data }}</li>
         </v-card>
         <v-dialog
             v-model="requestForm"

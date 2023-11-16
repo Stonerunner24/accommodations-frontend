@@ -4,16 +4,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import Login from "./views/Login.vue";
 //import RequestForm from "./views/RequestForm.vue";
 
-/*import TutorialsList from "./views/TutorialsList.vue";
-import EditTutorial from "./views/EditTutorial.vue";
-import AddTutorial from "./views/AddTutorial.vue";
-import ViewTutorial from "./views/ViewTutorial.vue";
-import AddLesson from "./views/AddLesson.vue";
-import EditLesson from "./views/EditLesson.vue"; */
 import AdminHome from "./views/AdminHome.vue";
 import StudentHome from "./views/StudentHome.vue";
 import AdminAdd from "./views/AdminAdd.vue"
 import AdminAccomManage from "./views/AdminAccomManage.vue"
+import AdminCatManage from "./views/AdminCatManage.vue"
+import AdminUserManage from "./views/AdminUserManage.vue"
+import AdminViewAccom from "./views/AdminViewAccom.vue"
 import AdminStudentAccom from "./views/AdminStudentAccom.vue"
 
 // Import layouts
@@ -60,11 +57,24 @@ const router = createRouter({
           // props: {route} => {{ request: route.request.requestId}}
         },
         {
-          // :id is the id of the request which is being added to 
           path: 'adminAccomManage/',
           name: 'adminAccomManage',
           component: AdminAccomManage,
-          // props: {route} => {{ request: route.request.requestId}}
+        },
+        {
+          path: 'adminCatManage/',
+          name: 'adminCatManage',
+          component: AdminCatManage,
+        },
+        {
+          path: 'adminUserManage/',
+          name: 'adminUserManage',
+          component: AdminUserManage,
+        },
+        {
+          path: 'adminViewAccom/',
+          name: 'adminViewAccom',
+          component: AdminViewAccom,
         },
         {
           path: 'adminStudentAccom/',
