@@ -40,16 +40,16 @@
         };
         console.log('accom: ', accomData)
         accommodationServices.create(accomData);
-       router.push({ name: 'adminHome'});
+       router.push({ name: 'adminViewAccom'});
     }
     function cancel(){
-        router.push({ name: 'adminHome'});
+        router.push({ name: 'adminViewAccom'});
     }
 </script>
 
 <template>
     <div>
-        <v-title class="text-h5" style="font-weight: bold;">Manage Accommodations</v-title>
+        <v-title class="text-h5" style="font-weight: bold;">Add New Accommodation</v-title>
     </div>
 
     <div class="pa-4">
