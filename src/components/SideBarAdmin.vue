@@ -53,9 +53,7 @@ const changePage = (newPage) => {
                             </v-list-item>
                             <v-list-item title="Categories" @click="changePage(`adminCatManage`)" density="compact" width="100%">
                             </v-list-item>
-                            <v-list-item title="Students" @click="" density="compact" width="100%">
-                            </v-list-item>
-                            <v-list-item title="Faculty" @click="" density="compact" width="100%">
+                            <v-list-item title="Users" @click="changePage(`adminUserManage`)" density="compact" width="100%">
                             </v-list-item>
                             <v-list-item title="Semesters" @click="" density="compact" width="100%">
                             </v-list-item>
