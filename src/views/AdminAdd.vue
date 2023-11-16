@@ -26,7 +26,7 @@ async function getAccomm() {
     await accommServices.getAll()
         .then((response) => {
             accommodations.value = response.data;
-            console.log('accommodations: ', accommodations.value);
+            //console.log('accommodations: ', accommodations.value);
             accommodations.value.forEach((accomm) => {
                 accomm.chapelChkBox = false;
             })
@@ -38,7 +38,7 @@ async function getAccomm() {
 async function getRequest() {
     await requestServices.getOne(requestId)
         .then((response) => {
-            console.log(request);
+            //console.log(request);
             request.value = response.data;
             season.value = request.value.semester.season;
             year.value = request.value.semester.year;
@@ -53,7 +53,7 @@ async function getRequest() {
 async function getAccomCat() {
     await accomCatServices.getAll()
         .then((response) => {
-            console.log(response);
+            //console.log(response);
             accomCategory.value = response.data;
         })
         .catch((err) => {
@@ -72,7 +72,7 @@ function cancel() {
     router.push({ name: 'adminHome' });
 }
 
-function save() {
+async function save() {
 
     let studentAccomData = {
         accomId: null,
@@ -84,9 +84,10 @@ function save() {
     }
 
     let checkedAccommodations = selectedAccommodations.value;
-    console.log('selected accom', checkedAccommodations)
-    console.log(request.value);
+    //console.log('selected accom', checkedAccommodations)
+    //console.log(request.value);
 
+    let promises = [];
     for (let i = 0; i < selectedAccommodations.value.length; i++) {
         if (selectedAccommodations.value[i]) {
             let accom = findAccomById(i);
@@ -98,22 +99,24 @@ function save() {
             studentAccomData.studentId = request.value.studentId;
 
             studentAccomServices.create(studentAccomData);
+
+            promises.push(studentAccomServices.create(studentAccomData));
         }
     }
+    await Promise.all(promises);
+
     requestServices.update(requestId, { approvedBy: (user.fName + ' ' + user.lName), status: 'Closed' });
     // Send the emails
     const data = {
         studentId: request.value.studentId,
         semesterId: request.value.semesterId,
     }
-    console.log(`Email data: ${data}`);
-    console.log(request.value.studentId);
     utilServices.emailFaculty(data)
         .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
         })
         .catch((e) => {
-            console.log(e.response.data.message);
+            console.log(e.response);
         });
     // Back to homepage
     router.push({ name: 'adminHome' });
