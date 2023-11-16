@@ -10,7 +10,7 @@
             name: textName.value,
         };
         accomCatServices.create(categoryData);
-        //router.push({ name: 'adminHome'});
+        this.router.go()
     }
     function cancel(){
         router.push({ name: 'adminHome'});
@@ -18,7 +18,6 @@
 </script>
 
 <template>
-    <p>{{ textName }}</p>
     <div>
         <v-title class="text-h5" style="font-weight: bold;">Manage Category</v-title>
     </div>
