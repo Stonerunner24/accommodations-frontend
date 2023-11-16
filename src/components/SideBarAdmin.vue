@@ -36,11 +36,9 @@ const changePage = (newPage) => {
                 >
                     <v-expansion-panel-text class="mx-n4 my-n2">
                         <v-list style="padding-top: 1px; padding-bottom: 1px;">
-                            <v-list-item title="View Accommodations" @click="" density="compact" width="100%">
+                            <v-list-item title="Manage Accomms" @click="changePage(`adminViewAccom`)" density="compact" width="100%">
                             </v-list-item>
-                            <v-list-item title="Student Accomms" @click="changePage(`adminStudentAccom`)" density="compact" width="100%">
-                            </v-list-item>
-                            <v-list-item title="Manage" @click="changePage(`adminAccomManage`)" density="compact" width="100%">
+                            <v-list-item title="View Student Accomms" @click="changePage(`adminStudentAccom`)" density="compact" width="100%">
                             </v-list-item>
                         </v-list>
                     </v-expansion-panel-text>
@@ -51,9 +49,9 @@ const changePage = (newPage) => {
                 >
                     <v-expansion-panel-text class="mx-n4 my-n2">
                         <v-list style="padding-top: 1px; padding-bottom: 1px;">
-                            <v-list-item title="Accommodations" @click="changePage(`adminAccomManage`)" density="compact" width="100%">
+                            <v-list-item title="Accommodations" @click="changePage(`adminViewAccom`)" density="compact" width="100%">
                             </v-list-item>
-                            <v-list-item title="Categories" @click="" density="compact" width="100%">
+                            <v-list-item title="Categories" @click="changePage(`adminCatManage`)" density="compact" width="100%">
                             </v-list-item>
                             <v-list-item title="Students" @click="" density="compact" width="100%">
                             </v-list-item>
