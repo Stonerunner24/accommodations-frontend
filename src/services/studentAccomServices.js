@@ -11,8 +11,8 @@ export default{
     getAllForStudent(studentId){
         return apiClient.get(baseURL + `studentId/${studentId}`);
     },
-    getAllForSemester(semester){
-        return apiClient.get(baseURL + `semester/${semester}`);
+    getAllForSemester(semesterId){
+        return apiClient.get(baseURL + `semesterId/${semesterId}`);
     },
     getAllForAccommodation(accomId){
         return apiClient.get(baseURL + `accomId/${accomId}`);
