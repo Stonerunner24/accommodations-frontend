@@ -30,14 +30,17 @@ const findHome = () => {
 }
 
 const logout = () => {
-  AuthServices.logoutUser(user.value)
+  console.log("In logout function")
+  AuthServices.logoutUser(user.value.token)
     .then((response) => {
+      console.log("Logout response received");
       console.log(response);
       Utils.removeItem("user");
-      $router.push({ name: "login" });
+      router.push({ name: "login" });
     })
     .catch((error) => {
       console.log("error", error);
+      router.push({ name: "login" });
     });
 };
 
