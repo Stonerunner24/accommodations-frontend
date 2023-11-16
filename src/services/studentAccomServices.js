@@ -12,7 +12,6 @@ export default{
         return apiClient.get(baseURL + `studentId/${studentId}`);
     },
     getAllForSemester(semesterId){
-        console.log("made it to the get all for semester function in student accom service");
         return apiClient.get(baseURL + `semesterId/${semesterId}`);
     },
     getAllForAccommodation(accomId){
