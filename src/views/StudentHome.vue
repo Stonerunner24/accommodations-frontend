@@ -39,9 +39,9 @@ import studentAccomServices from "../services/studentAccomServices";
         user.value = Utils.getStore("user");
         await StudentServices.getEmail(user.value.email)
             .then((response) => {
-                student.value = response.data[0];
-                //console.log("inside find student");
-                //console.log(student.value);
+                student.value[0] = response.data[0];
+                console.log("inside find student");
+                console.log(student.value);
                 if(!student.value[0].permission){
                     permissions.value = true;
                 }
