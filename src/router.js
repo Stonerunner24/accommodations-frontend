@@ -11,6 +11,7 @@ import AdminAccomManage from "./views/AdminAccomManage.vue"
 import AdminCatManage from "./views/AdminCatManage.vue"
 import AdminUserManage from "./views/AdminUserManage.vue"
 import AdminViewAccom from "./views/AdminViewAccom.vue"
+import AdminStudentAccom from "./views/AdminStudentAccom.vue"
 
 // Import layouts
 import AdminLayout from "./layouts/AdminLayout.vue";
@@ -74,6 +75,11 @@ const router = createRouter({
           path: 'adminViewAccom/',
           name: 'adminViewAccom',
           component: AdminViewAccom,
+        },
+        {
+          path: 'adminStudentAccom/',
+          name: 'adminStudentAccom',
+          component: AdminStudentAccom,
         },
       ],
     },
