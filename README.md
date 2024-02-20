@@ -1,6 +1,6 @@
-# Tutorial Frontend in Vue 3
+# Accommodations Frontend in Vue 3
 
-This application allows users to create and maintain a list of tutorials that can have multiple lessons within. Please visit https://github.com/OC-ComputerScience/tutorial-backend for the backend repository.
+This application allows students to create a request for ADA Accommodations at Oklahoma Christian University. Administrators can look at those requests and approve them for their records as well as alerting relevant staff such as the student's professors about the new accommodations. Please visit https://github.com/OC-ComputerScience/tutorial-backend for the backend repository.
 
 #### Please note:
 
